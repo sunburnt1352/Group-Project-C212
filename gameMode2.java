@@ -1,0 +1,2 @@
+public class gameMode2 {
+}
