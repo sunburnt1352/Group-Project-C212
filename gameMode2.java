@@ -19,7 +19,7 @@ public class gameMode2 {
         }
         String extracted = scanner.nextLine();
         for (int i = 0; i < extracted.length(); i++) {
-            res.add("asl_" + extracted.charAt(i) + ".jpg");    // TODO: check file type
+            res.add("asl-" + extracted.charAt(i) + ".png");
         }
         return res;
     }
