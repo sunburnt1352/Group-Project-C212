@@ -6,7 +6,9 @@ import java.util.stream.Stream;
 
 public class gameMode1 {
 
-    private int SCORE = 0;
+    private int SCORE;
+
+    gameMode1() { this.SCORE = 0; }
 
     /**
      * Pulls a random finger sign
