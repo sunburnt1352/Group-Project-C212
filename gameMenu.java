@@ -11,9 +11,6 @@ public class gameMenu {
     JFrame frame = new JFrame("Sign Language Trainer");
     JLabel textLabel = new JLabel();
     JPanel textPanel = new JPanel();
-    JPanel boardPanel = new JPanel();
-
-    JButton[] board = new JButton[9];
 
 
     Random random = new Random();
@@ -26,7 +23,7 @@ public class gameMenu {
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new BorderLayout());
+        frame.setLayout(null);
 
         textLabel.setFont(new Font("Arial", Font.PLAIN, 50));
         textLabel.setHorizontalAlignment(JLabel.CENTER);
@@ -35,17 +32,23 @@ public class gameMenu {
 
         textPanel.setLayout(new BorderLayout());
         textPanel.add(textLabel);
-        frame.add(textPanel, BorderLayout.NORTH);
+        textPanel.setBounds(0, 0, boardWidth, boardHeight/10);
+        frame.add(textPanel);
 
-        //boardPanel.setLayout(new GridLayout(3, 3));
-        // boardPanel.setBackground(Color.black);
-        frame.add(boardPanel);
+        JButton button1 = new JButton("Game Mode 1");
+        //button1.setAlignmentY(40); button1.setAlignmentX(40);
+        button1.setBounds(((boardWidth/2)-(boardWidth/10) ), ( (boardHeight-(4*(boardHeight/5)))), boardWidth/5, boardHeight/10);
+        button1.setBackground(Color.green);
+        frame.add(button1);
+
+        JButton button2 = new JButton("Game Mode 2");
+        button2.setBounds(((boardWidth/2)-(boardWidth/10) ), ( (boardHeight-(3*(boardHeight/5)))), boardWidth/5, boardHeight/10);
+        button2.setBackground(Color.blue);
+        frame.add(button2);
 
 
 
-        JButton tile = new JButton();
-        tile.setAlignmentY(50);
-        tile.setAlignmentX(50);
+
         
 
 
