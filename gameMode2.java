@@ -20,7 +20,9 @@ public class gameMode2 {
         int n = (int) (Math.random() * 100);    // random line selection
         // Dictionary size must stay at 100
         List<String> res = new LinkedList<>();
-       Scanner scanner = new Scanner(new File("dictionary.txt").getAbsolutePath());  
+
+
+        Scanner scanner = new Scanner(new File("dictionary.txt").getAbsolutePath());
         for (int i = 0; i < n; i++) {
             scanner.nextLine();
         }

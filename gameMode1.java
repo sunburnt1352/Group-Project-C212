@@ -7,15 +7,19 @@ import java.util.stream.Stream;
 public class gameMode1 {
 
     private int SCORE;
+    private int mistakes;
 
-    gameMode1() { this.SCORE = 0; }
+    gameMode1() {
+        this.SCORE = 0;
+        this.mistakes=0;
+    }
 
     /**
      * Pulls a random finger sign
      * @return file name
      */
     String randomLetter() {
-        int n = (int) (Math.random() * 100);
+        int n = (int) (Math.random() * 26);
         List<Character> alphabet = Stream.of(
                 'a','b','c','d','e','f','g','h','i','j','k','l','m',
                 'n','o','p','q','r','s','t','u','v','w','x','y','z').toList();
@@ -33,5 +37,18 @@ public class gameMode1 {
         } catch (IOException ex) {
             throw new RuntimeException(ex);     // throw exception if error occurs
         }
+    }
+
+
+    public int getSCORE() {
+        return SCORE;
+    }
+
+    public int getMistakes() {
+        return mistakes;
+    }
+
+    public void setMistakes(int mistake){
+        this.mistakes=mistake;
     }
 }

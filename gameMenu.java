@@ -1,12 +1,18 @@
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.Objects;
 import java.util.Random;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
+
 public class gameMenu {
-    int boardWidth = 600;
-    int boardHeight = 650; //50 for the text panel on top
+    int boardWidth = 800;
+    int boardHeight = 800; //50 for the text panel on top
 
     JFrame frame = new JFrame("Sign Language Trainer");
     JLabel textLabel = new JLabel();
@@ -25,6 +31,15 @@ public class gameMenu {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(null);
 
+        menuMode();
+        //gameType1();
+
+        frame.setVisible(true);
+    }
+
+
+    void menuMode(){
+        frame.repaint();
         textLabel.setFont(new Font("Arial", Font.PLAIN, 50));
         textLabel.setHorizontalAlignment(JLabel.CENTER);
         textLabel.setText("Menu");
@@ -39,23 +54,151 @@ public class gameMenu {
         //button1.setAlignmentY(40); button1.setAlignmentX(40);
         button1.setBounds(((boardWidth/2)-(boardWidth/10) ), ( (boardHeight-(4*(boardHeight/5)))), boardWidth/5, boardHeight/10);
         button1.setBackground(Color.green);
+        button1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.getContentPane().removeAll();
+                gameType1();
+            }
+        });
+
         frame.add(button1);
 
         JButton button2 = new JButton("Game Mode 2");
         button2.setBounds(((boardWidth/2)-(boardWidth/10) ), ( (boardHeight-(3*(boardHeight/5)))), boardWidth/5, boardHeight/10);
         button2.setBackground(Color.blue);
+        button2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.getContentPane().removeAll();
+                gameTpe2();
+            }
+        });
+
         frame.add(button2);
-
-
-
-
-        
-
-
-
-
-        frame.setVisible(true);
     }
+
+
+
+
+
+    void gameType1(){
+        frame.repaint();
+        frame.setVisible(true);
+
+
+        textLabel.setFont(new Font("Arial", Font.PLAIN, 25));
+        textLabel.setHorizontalAlignment(JLabel.CENTER);
+        textLabel.setText("Game Mode 1");
+        textLabel.setOpaque(true);
+
+        textPanel.setLayout(new BorderLayout());
+        textPanel.add(textLabel);
+        textPanel.setBounds(0, 0, boardWidth, boardHeight/10);
+        frame.add(textPanel);
+
+
+
+        JButton menu= new JButton("Return to Menu");
+        menu.setBounds(0,0,(boardHeight/6),(boardWidth/10));
+        menu.setBackground(Color.ORANGE);
+
+        menu.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.getContentPane().removeAll();
+                menuMode();
+            }
+        });
+
+
+        frame.add(menu);
+
+
+
+
+        gameMode1 gameInstance= new gameMode1();
+
+        String name= gameInstance.randomLetter();
+
+        //File img = new File(Class.class.getResource("/resources"+name));
+
+
+
+        //Image currentLetter= Toolkit.getDefaultToolkit().createImage(img.getAbsolutePath());
+
+        JButton aslLetter = new JButton();
+        //aslLetter.setBounds(((boardWidth/2)-(boardWidth/10) ), ( (boardHeight-(4*(boardHeight/5)))), boardWidth/5, boardHeight/10);
+        aslLetter.setAlignmentX((boardWidth/2)-(boardWidth/10));
+        aslLetter.setAlignmentY( (boardHeight-(4*(boardHeight/5))));
+        aslLetter.setBorder(null);
+
+        System.out.println(name);
+
+        try {
+            //Image currentLetter = ImageIO.read(Objects.requireNonNull(getClass().getResource("/resources" + name)));
+            BufferedImage currentLetter = ImageIO.read(getClass().getClassLoader().getResourceAsStream("/resources" + name));
+
+            aslLetter.setIcon(new ImageIcon(currentLetter));
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+
+
+        //System.out.println(name);
+
+
+
+//        JLabel aslLetter = new JLabel((new ImageIcon(currentLetter)));
+
+
+
+        frame.add(aslLetter);
+
+
+
+        //could turn the start game code into an interface thing
+        while(gameInstance.getMistakes()!=3){
+            gameInstance.setMistakes(gameInstance.getMistakes()+1);
+
+        }
+
+
+
+    }
+
+
+    void gameTpe2(){
+        frame.repaint();
+
+
+        textLabel.setFont(new Font("Arial", Font.PLAIN, 25));
+        textLabel.setHorizontalAlignment(JLabel.CENTER);
+        textLabel.setText("Game Mode 2");
+        textLabel.setOpaque(true);
+
+        textPanel.setLayout(new BorderLayout());
+        textPanel.add(textLabel);
+        textPanel.setBounds(0, 0, boardWidth, boardHeight/10);
+        frame.add(textPanel);
+
+        JButton menu= new JButton("Return to Menu");
+        menu.setBounds(0,0,(boardHeight/6),(boardWidth/10));
+        menu.setBackground(Color.ORANGE);
+
+        menu.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.getContentPane().removeAll();
+                menuMode();
+            }
+        });
+
+        frame.add(menu);
+
+    }
+
 }
+
 
 
