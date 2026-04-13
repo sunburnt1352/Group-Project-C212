@@ -27,6 +27,7 @@ public class gameMode2 {
             scanner.nextLine();
         }
         String extracted = scanner.nextLine();
+        scanner.close();
         for (int i = 0; i < extracted.length(); i++) {
             res.add("asl-" + extracted.charAt(i) + ".png");
         }
