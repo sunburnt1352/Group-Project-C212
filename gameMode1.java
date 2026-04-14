@@ -12,10 +12,12 @@ public class gameMode1 {
 
     private int SCORE;
     private int mistakes;
+    private char currLetter;
 
     gameMode1() {
         this.SCORE = 0;
         this.mistakes=0;
+
     }
 
     /**
@@ -27,6 +29,7 @@ public class gameMode1 {
         List<Character> alphabet = Stream.of(
                 'a','b','c','d','e','f','g','h','i','j','k','l','m',
                 'n','o','p','q','r','s','t','u','v','w','x','y','z').toList();
+        this.currLetter=(alphabet.get(n));
         return "asl-" + alphabet.get(n) + ".png";
     }
 
@@ -65,5 +68,9 @@ public class gameMode1 {
 
     public void setMistakes(int mistake){
         this.mistakes=mistake;
+    }
+
+    public char getCurrLetter() {
+        return currLetter;
     }
 }
