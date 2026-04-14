@@ -4,6 +4,7 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Objects;
 import java.util.Random;
 import javax.imageio.ImageIO;
@@ -83,8 +84,6 @@ public class gameMenu {
 
 
     void gameType1(){
-        frame.repaint();
-        frame.setVisible(true);
 
 
         textLabel.setFont(new Font("Arial", Font.PLAIN, 25));
@@ -110,8 +109,6 @@ public class gameMenu {
                 menuMode();
             }
         });
-
-
         frame.add(menu);
 
 
@@ -119,43 +116,28 @@ public class gameMenu {
 
         gameMode1 gameInstance= new gameMode1();
 
-        String name= gameInstance.randomLetter();
+        ImageIcon currLetter= gameInstance.getRandomLetter();
+        JButton letter = new JButton();
+        letter.setBounds(((boardWidth/2)-(currLetter.getIconWidth()) ), ( (boardHeight/2)-currLetter.getIconHeight()), currLetter.getIconWidth(), currLetter.getIconHeight());
+        letter.setIcon(currLetter);
+        letter.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ImageIcon currLetter= gameInstance.getRandomLetter();
+                letter.setBounds(((boardWidth/2)-(currLetter.getIconWidth()) ), ( (boardHeight/2)-currLetter.getIconHeight()), currLetter.getIconWidth(), currLetter.getIconHeight());
+                letter.setIcon(currLetter);
 
-        //File img = new File(Class.class.getResource("/resources"+name));
-
-
-
-        //Image currentLetter= Toolkit.getDefaultToolkit().createImage(img.getAbsolutePath());
-
-        JButton aslLetter = new JButton();
-        //aslLetter.setBounds(((boardWidth/2)-(boardWidth/10) ), ( (boardHeight-(4*(boardHeight/5)))), boardWidth/5, boardHeight/10);
-        aslLetter.setAlignmentX((boardWidth/2)-(boardWidth/10));
-        aslLetter.setAlignmentY( (boardHeight-(4*(boardHeight/5))));
-        aslLetter.setBorder(null);
-
-        System.out.println(name);
-
-        try {
-            //Image currentLetter = ImageIO.read(Objects.requireNonNull(getClass().getResource("/resources" + name)));
-            BufferedImage currentLetter = ImageIO.read(getClass().getClassLoader().getResourceAsStream("/resources" + name));
-
-            aslLetter.setIcon(new ImageIcon(currentLetter));
-        } catch (Exception ex) {
-            System.out.println(ex);
-        }
-
-
-        //System.out.println(name);
+            }
+        });
+        frame.add(letter);
 
 
 
-//        JLabel aslLetter = new JLabel((new ImageIcon(currentLetter)));
 
 
 
-        frame.add(aslLetter);
-
-
+        frame.repaint();
+        frame.setVisible(true);
 
         //could turn the start game code into an interface thing
         while(gameInstance.getMistakes()!=3){
