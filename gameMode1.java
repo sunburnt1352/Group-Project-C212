@@ -1,5 +1,9 @@
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Stream;
@@ -37,6 +41,17 @@ public class gameMode1 {
         } catch (IOException ex) {
             throw new RuntimeException(ex);     // throw exception if error occurs
         }
+    }
+
+    ImageIcon getRandomLetter(){
+
+        URL imagePath = (getClass().getResource(randomLetter()));
+        System.out.println(imagePath);
+        ImageIcon icon = new ImageIcon(imagePath);
+        //BufferedImage myPicture = ImageIO.read(imagePath);
+
+        return icon;
+
     }
 
 
