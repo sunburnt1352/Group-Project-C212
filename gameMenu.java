@@ -1,13 +1,8 @@
 
+
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.Objects;
 import java.util.Random;
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
 
@@ -72,7 +67,7 @@ public class gameMenu {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.getContentPane().removeAll();
-                gameTpe2();
+                gameType2();
             }
         });
 
@@ -151,7 +146,7 @@ public class gameMenu {
     }
 
 
-    void gameTpe2(){
+    void gameType2(){
         frame.repaint();
 
 
