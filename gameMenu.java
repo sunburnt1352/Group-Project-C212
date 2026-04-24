@@ -1,5 +1,3 @@
-
-
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
@@ -49,7 +47,7 @@ public class gameMenu {
         JButton button1 = new JButton("Game Mode 1");
         //button1.setAlignmentY(40); button1.setAlignmentX(40);
         button1.setBounds(((boardWidth/2)-(boardWidth/10) ), ( (boardHeight-(4*(boardHeight/5)))), boardWidth/5, boardHeight/10);
-        button1.setBackground(Color.green);
+        button1.setBackground(Color.pink);
         button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -62,7 +60,7 @@ public class gameMenu {
 
         JButton button2 = new JButton("Game Mode 2");
         button2.setBounds(((boardWidth/2)-(boardWidth/10) ), ( (boardHeight-(3*(boardHeight/5)))), boardWidth/5, boardHeight/10);
-        button2.setBackground(Color.blue);
+        button2.setBackground(Color.orange);
         button2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -113,13 +111,13 @@ public class gameMenu {
 
         ImageIcon currLetter= gameInstance.getRandomLetter();
         JButton letter = new JButton();
-        letter.setBounds(((boardWidth/2)-(currLetter.getIconWidth()) ), ( (boardHeight/2)-currLetter.getIconHeight()), currLetter.getIconWidth(), currLetter.getIconHeight());
+        letter.setBounds(((boardWidth/2)-260), ( (boardHeight/2)-236), 260, 236); // max letter dimensions are 260x236
         letter.setIcon(currLetter);
         letter.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ImageIcon currLetter= gameInstance.getRandomLetter();
-                letter.setBounds(((boardWidth/2)-(currLetter.getIconWidth()) ), ( (boardHeight/2)-currLetter.getIconHeight()), currLetter.getIconWidth(), currLetter.getIconHeight());
+                letter.setBounds(((boardWidth/2)-260), ( (boardHeight/2)-236), 260, 236);
                 letter.setIcon(currLetter);
 
             }
@@ -177,6 +175,3 @@ public class gameMenu {
     }
 
 }
-
-
-
