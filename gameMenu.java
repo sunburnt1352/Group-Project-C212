@@ -5,7 +5,7 @@ import java.awt.event.KeyEvent;
 
 public class gameMenu {
     int boardWidth = 800;
-    int boardHeight = 800; //50 for the text panel on top
+    int boardHeight = 700; //50 for the text panel on top
 
     JFrame frame = new JFrame("Learn Sign Language!");
     JLabel textLabel = new JLabel();
@@ -86,7 +86,7 @@ public class gameMenu {
 
 
         JButton menu = new JButton("Return to Menu");
-        menu.setBounds(0, 0, (boardHeight / 6), (boardWidth / 10));
+        menu.setBounds(20, 20, (boardHeight / 4), (boardWidth / 10));
         menu.setBackground(Color.ORANGE);
 
         menu.addActionListener(new ActionListener() {
@@ -104,8 +104,8 @@ public class gameMenu {
         ImageIcon currLetter = gameInstance.getRandomLetter();
         JButton letter = new JButton();
         letter.setIcon(currLetter);
-        letter.setBounds(((boardWidth / 2) - currLetter.getIconWidth()),
-                ((boardHeight / 2) - currLetter.getIconHeight()),
+        letter.setBounds(boardWidth/2 - (int) (0.5*currLetter.getIconWidth()),
+                (boardHeight/2 - currLetter.getIconHeight()),
                 currLetter.getIconWidth(), currLetter.getIconHeight());
         letter.addKeyListener(new KeyListener() {
 
@@ -130,8 +130,8 @@ public class gameMenu {
                     menuMode();
                 }
                 ImageIcon currLetter = gameInstance.getRandomLetter();
-                letter.setBounds(((boardWidth / 2) - currLetter.getIconWidth()),
-                        ((boardHeight / 2) - currLetter.getIconHeight()),
+                letter.setBounds(boardWidth/2 - (int) (0.5*currLetter.getIconWidth()),
+                        (boardHeight/2 - currLetter.getIconHeight()),
                         currLetter.getIconWidth(), currLetter.getIconHeight());
                 letter.setIcon(currLetter);
             }
