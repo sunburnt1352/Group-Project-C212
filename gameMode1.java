@@ -36,9 +36,15 @@ public class gameMode1 {
      * Writes the final score to a file
      */
     void writeScore() {
-        String currTime = LocalDateTime.now().toString();
-        try (FileWriter fw = new FileWriter("ASL_Trainer_" + LocalDate.now() + ".out")) {
-        fw.write(LocalDate.now() + " " + LocalTime.now().toString().substring(0,8)
+        List<String> lines = new LinkedList<>();
+        try {                                       // check if any data already exist
+            lines = Files.readAllLines(Path.of(
+                    "ASL_Trainer_" + LocalDate.now() + ".out"));
+        } catch (IOException ex) {};
+        try (FileWriter fw = new FileWriter("ASL_Trainer_" + LocalDate.now() + ".out", true)) {
+            if (!lines.isEmpty()) { fw.write("\n"); }   // write new line if there is already data
+            fw.write(LocalDate.now() + " " +
+                    LocalTime.now().toString().substring(0, 8)
                     + " Game Mode 1 Score - " + this.SCORE);
         } catch (IOException ex) {
             throw new RuntimeException(ex);     // throw exception if error occurs
