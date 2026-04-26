@@ -111,11 +111,15 @@ public class gameMenu {
 
             @Override
             public void keyTyped(KeyEvent e) {
-                if (Character.toLowerCase(e.getKeyChar()) ==
-                        currLetter.toString().charAt(currLetter.toString().length()-5)) {
+                System.out.println(e.getKeyChar()+ " | "+gameInstance.getCurrLetter());
+                //System.out.println(gameInstance.getMistakes());
+                if (Character.toLowerCase(e.getKeyChar()) ==gameInstance.getCurrLetter()) {
+//                if (Character.toLowerCase(e.getKeyChar()) ==
+//                        currLetter.toString().charAt(currLetter.toString().length()-5)) {
                     score += 10;
                 }
                 else {
+                    System.out.println("had a mistake");
                     gameInstance.setMistakes(gameInstance.getMistakes() + 1);
                 }
 
