@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 
 public class gameMode1 {
 
-    private int SCORE;
+    int SCORE;
     private int mistakes;
     private char currLetter;
 
@@ -38,9 +38,9 @@ public class gameMode1 {
      */
     void writeScore() {
         String currTime = LocalDateTime.now().toString();
-        try (FileWriter fw = new FileWriter(currTime + ".out")) {
-            fw.write(currTime);
-            fw.write(" - Game Mode 1 Score: " + this.SCORE);    // TODO: rename the game mode
+        try (FileWriter fw = new FileWriter("ASL_Trainer_" + LocalDate.now() + ".out")) {
+        fw.write(LocalDate.now() + " " + LocalTime.now().toString().substring(0,8)
+                    + " Game Mode 1 Score - " + this.SCORE);
         } catch (IOException ex) {
             throw new RuntimeException(ex);     // throw exception if error occurs
         }
