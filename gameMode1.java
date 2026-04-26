@@ -2,21 +2,23 @@ import javax.swing.*;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Stream;
 
 public class gameMode1 {
 
     int SCORE;
-    private int mistakes;
     private char currLetter;
+    private int MISTAKES;
 
     gameMode1() {
         this.SCORE = 0;
-        this.mistakes=0;
-
+        this.MISTAKES = 0;
     }
 
     /**
@@ -40,7 +42,7 @@ public class gameMode1 {
         try {                                       // check if any data already exist
             lines = Files.readAllLines(Path.of(
                     "ASL_Trainer_" + LocalDate.now() + ".out"));
-        } catch (IOException ex) {};
+        } catch (IOException ex) {}
         try (FileWriter fw = new FileWriter("ASL_Trainer_" + LocalDate.now() + ".out", true)) {
             if (!lines.isEmpty()) { fw.write("\n"); }   // write new line if there is already data
             fw.write(LocalDate.now() + " " +
@@ -51,10 +53,14 @@ public class gameMode1 {
         }
     }
 
+    /**
+     * Gets a random ImageIcon
+     * @return ImageIcon
+     */
     ImageIcon getRandomLetter(){
 
         URL imagePath = (getClass().getResource(randomLetter()));
-        System.out.println(imagePath);
+//        System.out.println(imagePath);
         ImageIcon icon = new ImageIcon(imagePath);
         //BufferedImage myPicture = ImageIO.read(imagePath);
 
@@ -62,20 +68,34 @@ public class gameMode1 {
 
     }
 
-
+    /**
+     * Getter for the score
+     * @return score
+     */
     public int getSCORE() {
         return SCORE;
     }
 
-    public int getMistakes() {
-        return mistakes;
-    }
-
-    public void setMistakes(int mistake){
-        this.mistakes=mistake;
-    }
-
+    /**
+     * Getter for the current character
+     * @return the current character
+     */
     public char getCurrLetter() {
         return currLetter;
+    }
+
+    /**
+     * Getter for the mistakes
+     * @return number of mistakes made
+     */
+    public int getMistakes() {
+        return this.MISTAKES;
+    }
+
+    /**
+     * Setter for the mistakes
+     */
+    public void setMistakes(int n) {
+        this.MISTAKES = n;
     }
 }
