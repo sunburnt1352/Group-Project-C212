@@ -103,19 +103,19 @@ public class gameMenu {
 
         ImageIcon currLetter = gameInstance.getRandomLetter();
         JButton letter = new JButton();
-        letter.setBounds(((boardWidth / 2) - 260), ((boardHeight / 2) - 236), 260, 236);
         letter.setIcon(currLetter);
+        letter.setBounds(((boardWidth / 2) - currLetter.getIconWidth()),
+                ((boardHeight / 2) - currLetter.getIconHeight()),
+                currLetter.getIconWidth(), currLetter.getIconHeight());
         letter.addKeyListener(new KeyListener() {
 
             // https://www.geeksforgeeks.org/java/java-keylistener-in-awt/
 
             @Override
             public void keyTyped(KeyEvent e) {
-                System.out.println(e.getKeyChar()+ " | "+gameInstance.getCurrLetter());
+//                System.out.println(e.getKeyChar()+ " | "+gameInstance.getCurrLetter());
                 //System.out.println(gameInstance.getMistakes());
-                if (Character.toLowerCase(e.getKeyChar()) ==gameInstance.getCurrLetter()) {
-//                if (Character.toLowerCase(e.getKeyChar()) ==
-//                        currLetter.toString().charAt(currLetter.toString().length()-5)) {
+                if (Character.toLowerCase(e.getKeyChar()) == gameInstance.getCurrLetter()) {
                     gameInstance.SCORE += 10;
                 }
                 else {
@@ -125,13 +125,14 @@ public class gameMenu {
 
                 if (gameInstance.getMistakes() >= 3) {
                     // Write the score to a file
-                    frame.getContentPane().removeAll();
                     gameInstance.writeScore();
+                    frame.getContentPane().removeAll();
                     menuMode();
-                    // Need to close the icon
                 }
                 ImageIcon currLetter = gameInstance.getRandomLetter();
-                letter.setBounds(((boardWidth / 2) - 260), ((boardHeight / 2) - 236), 260, 236);
+                letter.setBounds(((boardWidth / 2) - currLetter.getIconWidth()),
+                        ((boardHeight / 2) - currLetter.getIconHeight()),
+                        currLetter.getIconWidth(), currLetter.getIconHeight());
                 letter.setIcon(currLetter);
             }
 
