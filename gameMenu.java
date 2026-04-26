@@ -116,7 +116,7 @@ public class gameMenu {
                 if (Character.toLowerCase(e.getKeyChar()) ==gameInstance.getCurrLetter()) {
 //                if (Character.toLowerCase(e.getKeyChar()) ==
 //                        currLetter.toString().charAt(currLetter.toString().length()-5)) {
-                    score += 10;
+                    gameInstance.SCORE += 10;
                 }
                 else {
                     System.out.println("had a mistake");
@@ -127,6 +127,7 @@ public class gameMenu {
                     // Write the score to a file
                     gameInstance.writeScore();
                     menuMode();
+                    // Need to close the icon
                 }
                 ImageIcon currLetter = gameInstance.getRandomLetter();
                 letter.setBounds(((boardWidth / 2) - 260), ((boardHeight / 2) - 236), 260, 236);
