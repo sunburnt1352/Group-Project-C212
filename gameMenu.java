@@ -125,6 +125,7 @@ public class gameMenu {
 
                 if (gameInstance.getMistakes() >= 3) {
                     // Write the score to a file
+                    frame.getContentPane().removeAll();
                     gameInstance.writeScore();
                     menuMode();
                     // Need to close the icon
