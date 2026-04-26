@@ -11,8 +11,9 @@ public class gameMenu {
     JLabel textLabel = new JLabel();
     JPanel textPanel = new JPanel();
 
-    private int score = 0;  // unnecessary?
-
+    /**
+     * Constructor for the starting menu; creates the frame
+     */
     gameMenu() {
         // frame.setVisible(true);
         frame.setSize(boardWidth, boardHeight);
@@ -39,8 +40,6 @@ public class gameMenu {
         textPanel.add(textLabel);
         textPanel.setBounds(0, 0, boardWidth, boardHeight / 10);
         frame.add(textPanel);
-
-        this.score = 0;
 
         JButton button1 = new JButton("Game Mode 1");
         //button1.setAlignmentY(40); button1.setAlignmentX(40);
@@ -71,6 +70,9 @@ public class gameMenu {
     }
 
 
+    /**
+     * Runs gameType1
+     */
     void gameType1() {
 
 
@@ -88,18 +90,20 @@ public class gameMenu {
         JButton menu = new JButton("Return to Menu");
         menu.setBounds(20, 20, (boardHeight / 4), (boardWidth / 10));
         menu.setBackground(Color.ORANGE);
+        menu.setOpaque(true);
+        //TODO: Bring menu to front of textLabel
+
+        gameMode1 gameInstance = new gameMode1();
 
         menu.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                gameInstance.writeScore();
                 frame.getContentPane().removeAll();
                 menuMode();
             }
         });
         frame.add(menu);
-
-
-        gameMode1 gameInstance = new gameMode1();
 
         ImageIcon currLetter = gameInstance.getRandomLetter();
         JButton letter = new JButton();
@@ -111,6 +115,11 @@ public class gameMenu {
 
             // https://www.geeksforgeeks.org/java/java-keylistener-in-awt/
 
+            /**
+             * Check whether a typed key was correct; change images; increment score
+             *    and mistakes; end game
+             * @param e keystroke
+             */
             @Override
             public void keyTyped(KeyEvent e) {
 //                System.out.println(e.getKeyChar()+ " | "+gameInstance.getCurrLetter());
@@ -119,7 +128,7 @@ public class gameMenu {
                     gameInstance.SCORE += 10;
                 }
                 else {
-                    System.out.println("had a mistake");
+//                    System.out.println("had a mistake");
                     gameInstance.setMistakes(gameInstance.getMistakes() + 1);
                 }
 
@@ -154,9 +163,11 @@ public class gameMenu {
     }
 
 
+    /**
+     * Runs gameType 2
+     */
     void gameType2() {
         frame.repaint();
-
 
         textLabel.setFont(new Font("Bradley Hand ITC", Font.PLAIN, 25));
         textLabel.setHorizontalAlignment(JLabel.CENTER);
@@ -171,10 +182,14 @@ public class gameMenu {
         JButton menu = new JButton("Return to Menu");
         menu.setBounds(0, 0, (boardHeight / 6), (boardWidth / 10));
         menu.setBackground(Color.ORANGE);
+        //TODO: Bring menu to front of textLabel
 
-        menu.addActionListener(new ActionListener() {  // what does this do?
+        gameMode2 gameInstance = new gameMode2();
+
+        menu.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                gameInstance.writeScore();
                 frame.getContentPane().removeAll();
                 menuMode();
             }
