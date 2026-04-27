@@ -1,15 +1,12 @@
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Scanner;
 
-public class gameMode2 implements Actions{
+public class gameMode2 {
 
     int SCORE;
     private String currWord;
@@ -25,24 +22,34 @@ public class gameMode2 implements Actions{
         int n = (int) (Math.random() * 100);    // random line selection
         // Dictionary size must stay at 100
         List<String> res = new LinkedList<>();
+//        System.out.println(n);
+        try (BufferedReader br = new BufferedReader(new FileReader(
+                "dictionary.txt"))) {
+            int i = 0;
+            while (i < n) {
+                br.readLine();
+                i++;
+            }
+            String extracted = br.readLine();
+            currWord = extracted;
+            for (int j = 0; j < extracted.length(); j++) {
+                res.add("asl-" + extracted.charAt(j) + ".png");
+            }
+            return res;
+        }
+        catch (IOException ex) { throw new RuntimeException(ex); }
 
-        Scanner scanner = new Scanner(new File("dictionary.txt").getAbsolutePath());
-        for (int i = 0; i < n; i++) {
-            scanner.nextLine();
-        }
-        String extracted = scanner.nextLine();
-        currWord = extracted;
-        for (int i = 0; i < extracted.length(); i++) {
-            res.add("asl-" + extracted.charAt(i) + ".png");
-        }
-        return res;
+//        Scanner scanner = new Scanner(new File("dictionary.txt").getAbsolutePath());
+//        for (int i = 0; i < n; i++) {
+//            System.out.println("scanning");
+//            scanner.nextLine();
+//        }
     }
 
     /**
      * Writes the final score to a file
      */
-    @Override
-    public void writeScore() {
+    void writeScore() {
         List<String> lines = new LinkedList<>();
         try {                                       // check if any data already exist
             lines = Files.readAllLines(Path.of(
@@ -52,7 +59,7 @@ public class gameMode2 implements Actions{
             if (!lines.isEmpty()) { fw.write("\n"); }   // write new line if there is already data
             fw.write(LocalDate.now() + " " +
                     LocalTime.now().toString().substring(0, 8)
-                    + " Game Mode 2 Score - " + this.SCORE);
+                    + " Word Mode Score - " + this.SCORE);
         } catch (IOException ex) {
             throw new RuntimeException(ex);     // throw exception if error occurs
         }
@@ -62,8 +69,7 @@ public class gameMode2 implements Actions{
      * Getter for the score
      * @return score
      */
-    @Override
-    public int getScore() {
+    public int getSCORE() {
         return SCORE;
     }
 
@@ -79,7 +85,6 @@ public class gameMode2 implements Actions{
      * Getter for the mistakes
      * @return number of mistakes made
      */
-    @Override
     public int getMistakes() {
         return this.MISTAKES;
     }
@@ -87,7 +92,6 @@ public class gameMode2 implements Actions{
     /**
      * Setter for the mistakes
      */
-    @Override
     public void setMistakes(int n) {
         this.MISTAKES = n;
     }
