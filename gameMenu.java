@@ -135,22 +135,22 @@ public class gameMenu {
         ImageIcon currLetter = gameInstance.getRandomLetter();
         JButton letter = new JButton("Begin");
         letter.setBackground(Color.PINK);
-        letter.setBounds(( (boardWidth/2)-(boardWidth/10)),  ( (boardHeight/3)-(boardHeight/20)), boardWidth/5, boardHeight/10);
+        letter.setBounds(boardWidth/2-50, boardHeight/2-50, 100,100);
 
         nonConstantItems.add(letter);
 
-        //TODO: not the prettiest code, but it works, need to figure out how to make it look better
         letter.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (letter.hasFocus()) {
+//                    letter.setBackground(null);
                     //System.out.println("has focus");
-                    letter.setIcon(currLetter);
-                    //TODO: Fix annoying blue bit left of the icon
                     letter.setBounds(boardWidth/2 - (int) (0.5*currLetter.getIconWidth()),
                             (boardHeight/2 - currLetter.getIconHeight()),
                             currLetter.getIconWidth(), currLetter.getIconHeight());
-
+                    letter.setIcon(currLetter);
+                    letter.setText(null);
+                    
                     letter.addKeyListener(new KeyListener() {
 
                         // https://www.geeksforgeeks.org/java/java-keylistener-in-awt/
