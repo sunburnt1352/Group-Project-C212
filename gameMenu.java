@@ -134,7 +134,7 @@ public class gameMenu {
     void runGame1(gameMode1 gameInstance){
         ImageIcon currLetter = gameInstance.getRandomLetter();
         JButton letter = new JButton("Begin");
-        letter.setBackground(Color.ORANGE);
+        letter.setBackground(Color.PINK);
         letter.setBounds(( (boardWidth/2)-(boardWidth/10)),  ( (boardHeight/3)-(boardHeight/20)), boardWidth/5, boardHeight/10);
 
         nonConstantItems.add(letter);
@@ -254,7 +254,7 @@ public class gameMenu {
         frame.add(gameOverStats);
 
         JButton menu= new JButton("Menu");
-        menu.setBounds(boardWidth/3, boardHeight/2, (boardWidth/10),(boardHeight/10));
+        menu.setBounds((int) (boardWidth*3/10.0)-20, boardHeight/2, boardWidth/5,boardHeight/10);
         menu.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -264,9 +264,8 @@ public class gameMenu {
             }
         });
 
-
         JButton playAgain= new JButton("Play Again?");
-        playAgain.setBounds(boardWidth/2, boardHeight/2, (boardWidth/10),(boardHeight/10));
+        playAgain.setBounds(boardWidth/2+20, boardHeight/2, boardWidth/5,boardHeight/10);
         gameOverParts.add(menu);
         gameOverParts.add(playAgain);
 
@@ -330,7 +329,7 @@ public class gameMenu {
             }
         }
         if (getClass().getResource("question.png") == null) {
-            throw new RuntimeException("Could not find question.png. Check your file location!");
+            throw new RuntimeException("Could not find question.png. Check your file structure!");
         }
         ImageIcon question = new ImageIcon(getClass().getResource("question.png"));
         letter.setIcon(question);
@@ -366,6 +365,9 @@ public class gameMenu {
                 java.util.List<Character> letters = new ArrayList<>();
                 for (String s : word) {
                     letters.add(Character.toUpperCase(s.charAt(4)));
+                    if (getClass().getResource(s) == null) {
+                        throw new RuntimeException("Could not find "+s+". Check your file structure!");
+                    }
                     ImageIcon currLetter = new ImageIcon(getClass().getResource(s));
                     letter.setIcon(currLetter);
                     letter.setBounds(boardWidth / 2 - (int) (0.5 * currLetter.getIconWidth()),
