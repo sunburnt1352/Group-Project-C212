@@ -10,7 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class gameMode1  extends gameModes implements IGameInstance{
+public class gameMode1 extends gameModes {
 
     int SCORE;
     private char currLetter;
