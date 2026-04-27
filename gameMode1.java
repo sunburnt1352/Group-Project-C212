@@ -10,7 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class gameMode1 implements Actions{
+public class gameMode1 implements IGameInstance {
 
     int SCORE;
     private char currLetter;
@@ -34,8 +34,6 @@ public class gameMode1 implements Actions{
         return "asl-" + alphabet.get(n) + ".png";
     }
 
-
-
     /**
      * Writes the final score to a file
      */
@@ -50,7 +48,7 @@ public class gameMode1 implements Actions{
             if (!lines.isEmpty()) { fw.write("\n"); }   // write new line if there is already data
             fw.write(LocalDate.now() + " " +
                     LocalTime.now().toString().substring(0, 8)
-                    + " Game Mode 1 Score - " + this.SCORE);
+                    + " Letter Mode Score - " + this.SCORE);
         } catch (IOException ex) {
             throw new RuntimeException(ex);     // throw exception if error occurs
         }
@@ -104,6 +102,4 @@ public class gameMode1 implements Actions{
     public void setMistakes(int n) {
         this.MISTAKES = n;
     }
-
-
 }
