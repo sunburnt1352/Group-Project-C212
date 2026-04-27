@@ -50,7 +50,7 @@ public class gameMode1 extends gameModes {
                     LocalTime.now().toString().substring(0, 8)
                     + " Letter Mode Score - " + this.SCORE);
         } catch (IOException ex) {
-            throw new RuntimeException(ex);     // throw exception if error occurs
+            throw new RuntimeException("An error occurred writing your score file: "+ex);     // throw exception if error occurs
         }
     }
 
@@ -60,12 +60,11 @@ public class gameMode1 extends gameModes {
      */
     ImageIcon getRandomLetter(){
 
-        URL imagePath = (getClass().getResource(randomLetter()));
+        URL imagePath = getClass().getResource(randomLetter());
 //        System.out.println(imagePath);
-        ImageIcon icon = new ImageIcon(imagePath);
+        if (imagePath == null) { throw new RuntimeException("Could not find a resource"); }
         //BufferedImage myPicture = ImageIO.read(imagePath);
-
-        return icon;
+        return new ImageIcon(imagePath);
 
     }
 
