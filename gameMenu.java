@@ -12,6 +12,7 @@ public class gameMenu {
     JFrame frame = new JFrame("Learn Sign Language!");
     JLabel textLabel = new JLabel();
     JPanel textPanel = new JPanel();
+    JPanel constantItems= new JPanel();
 
     /**
      * Constructor for the starting menu; creates the frame
@@ -81,7 +82,6 @@ public class gameMenu {
         frame.add(button2);
     }
 
-
     /**
      * Runs gameType1
      */
@@ -117,62 +117,94 @@ public class gameMenu {
         });
         frame.add(menu);
 
-        ImageIcon currLetter = gameInstance.getRandomLetter();
-        JButton letter = new JButton();
-        letter.setIcon(currLetter);
-        letter.setBounds(boardWidth/2 - (int) (0.5*currLetter.getIconWidth()),
-                (boardHeight/2 - currLetter.getIconHeight()),
-                currLetter.getIconWidth(), currLetter.getIconHeight());
-        //TODO: Fix the need to click on the letter before pressing the key
-        letter.addKeyListener(new KeyListener() {
-
-            // https://www.geeksforgeeks.org/java/java-keylistener-in-awt/
-
-            /**
-             * Check whether a typed key was correct; change images; increment score
-             *    and mistakes; end game
-             * @param e keystroke
-             */
-            @Override
-            public void keyTyped(KeyEvent e) {
-//                System.out.println(e.getKeyChar()+ " | "+gameInstance.getCurrLetter());
-                //System.out.println(gameInstance.getMistakes());
-                if (Character.toLowerCase(e.getKeyChar()) == gameInstance.getCurrLetter()) {
-                    gameInstance.SCORE += 10;
-                }
-                else {
-//                    System.out.println("had a mistake");
-                    gameInstance.setMistakes(gameInstance.getMistakes() + 1);
-                }
-
-                if (gameInstance.getMistakes() >= 3) {
-                    // Write the score to a file
-                    gameInstance.writeScore();
-                    frame.getContentPane().removeAll();
-                    menuMode();
-                }
-                ImageIcon currLetter = gameInstance.getRandomLetter();
-                letter.setBounds(boardWidth/2 - (int) (0.5*currLetter.getIconWidth()),
-                        (boardHeight/2 - currLetter.getIconHeight()),
-                        currLetter.getIconWidth(), currLetter.getIconHeight());
-                letter.setIcon(currLetter);
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {}
-
-            @Override
-            public void keyReleased(KeyEvent e) {}
-
-        });
-        frame.add(letter);
-        frame.setFocusable(true);
-
+        runGame1(gameInstance);
         // https://math.hws.edu/eck/cs124/javanotes3/c6/s5.html
 
         frame.repaint();
         frame.setVisible(true);
 
+    }
+
+
+    void runGame1(gameMode1 gameInstance){
+        ImageIcon currLetter = gameInstance.getRandomLetter();
+        JButton letter = new JButton("Begin");
+        letter.setBounds(( (boardWidth/2)-(boardWidth/10)),  ( (boardHeight/3)-(boardHeight/20)), boardWidth/5, boardHeight/10);
+
+
+        //TODO: not the prettiest code, but it works, need to figure out how to make it look better
+        letter.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(letter.hasFocus()) {
+                    //System.out.println("has focus");
+                    letter.setIcon(currLetter);
+                    letter.setBounds(boardWidth/2 - (int) (0.5*currLetter.getIconWidth()),
+                            (boardHeight/2 - currLetter.getIconHeight()),
+                            currLetter.getIconWidth(), currLetter.getIconHeight());
+
+                    letter.addKeyListener(new KeyListener() {
+
+                        // https://www.geeksforgeeks.org/java/java-keylistener-in-awt/
+
+                        /**
+                         * Check whether a typed key was correct; change images; increment score
+                         * and mistakes; end game
+                         *
+                         * @param e keystroke
+                         */
+                        @Override
+                        public void keyTyped(KeyEvent e) {
+
+                            //if it is the correct letter
+                            if (Character.toLowerCase(e.getKeyChar()) == gameInstance.getCurrLetter()) {
+                                gameInstance.SCORE += 10;
+                            }
+
+                            //if it is not the correct letter, adds a mistake
+                            else {
+                                gameInstance.setMistakes(gameInstance.getMistakes() + 1);
+                            }
+
+                            //if it is 3 mistakes, run game over code
+                            if (gameInstance.getMistakes() >= 3) {
+                                gameOver(gameInstance);
+                            }
+
+                            ImageIcon currLetter = gameInstance.getRandomLetter();
+                            letter.setBounds(boardWidth / 2 - (int) (0.5 * currLetter.getIconWidth()),
+                                    (boardHeight / 2 - currLetter.getIconHeight()),
+                                    currLetter.getIconWidth(), currLetter.getIconHeight());
+                            letter.setIcon(currLetter);
+                        }
+
+
+                        @Override
+                        public void keyPressed(KeyEvent e) {
+                        }
+
+                        @Override
+                        public void keyReleased(KeyEvent e) {
+                        }
+
+
+                    });
+                }
+            }
+        });
+
+
+        frame.add(letter);
+        frame.setFocusable(true);
+    }
+
+    void gameOver(gameModes gameInstance){
+        gameInstance.writeScore();
+        frame.getContentPane().removeAll();
+
+
+
+        menuMode();
     }
 
 

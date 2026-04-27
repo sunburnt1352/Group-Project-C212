@@ -6,7 +6,7 @@ import java.time.LocalTime;
 import java.util.LinkedList;
 import java.util.List;
 
-public class gameMode2 implements IGameInstance {
+public class gameMode2  extends gameModes implements IGameInstance {
 
     int SCORE;
     private String currWord;
