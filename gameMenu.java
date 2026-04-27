@@ -38,11 +38,12 @@ public class gameMenu {
 
         textPanel.setLayout(new BorderLayout());
         textPanel.add(textLabel);
-        textPanel.setBounds(0, 0, boardWidth, boardHeight / 10);
+        textPanel.setBounds((boardWidth/2)-(boardWidth/10), 0, (boardWidth/5), boardHeight / 10);
         frame.add(textPanel);
 
+        //TODO: figure out why this doesn't show up: fixed was just too low but it was showing up
         JLabel copyright = new JLabel();
-        copyright.setFont(new Font("Bradley Hand ITC", Font.PLAIN,14));
+        copyright.setFont(new Font("Bradley Hand ITC", Font.PLAIN,12));
         copyright.setHorizontalAlignment(JLabel.CENTER);
         copyright.setText("Copyright 2026 by Charrah McNider");
         copyright.setOpaque(true);
@@ -94,7 +95,7 @@ public class gameMenu {
 
         textPanel.setLayout(new BorderLayout());
         textPanel.add(textLabel);
-        textPanel.setBounds(0, 0, boardWidth, boardHeight / 10);
+        //textPanel.setBounds((boardWidth/2)-(boardWidth/10), 0, (boardWidth/5), boardHeight / 10);
         frame.add(textPanel);
 
 
@@ -102,6 +103,7 @@ public class gameMenu {
         menu.setBounds(20, 20, (boardHeight / 4), (boardWidth / 10));
         menu.setBackground(Color.ORANGE);
         menu.setOpaque(true);
+        //TODO: Bring menu to front of textLabel
 
         gameMode1 gameInstance = new gameMode1();
 
@@ -187,12 +189,13 @@ public class gameMenu {
 
         textPanel.setLayout(new BorderLayout());
         textPanel.add(textLabel);
-        textPanel.setBounds(0, 0, boardWidth, boardHeight / 10);
+        //textPanel.setBounds(0, 0, boardWidth, boardHeight / 10);
         frame.add(textPanel);
 
         JButton menu = new JButton("Return to Menu");
         menu.setBounds(0, 0, (boardHeight / 6), (boardWidth / 10));
         menu.setBackground(Color.ORANGE);
+        //TODO: Bring menu to front of textLabel
 
         gameMode2 gameInstance = new gameMode2();
 
