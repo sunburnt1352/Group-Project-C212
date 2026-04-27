@@ -41,6 +41,9 @@ public class gameMenu {
     }
 
 
+    /**
+     * Create the menu with header, copyright, and game mode buttons
+     */
     void menuMode() {
         //frame.repaint();
         textLabel.setFont(new Font("Bradley Hand ITC", Font.PLAIN, 50));
@@ -98,7 +101,7 @@ public class gameMenu {
 
 
     /**
-     * Runs gameType1
+     * Builds the header and menu button for gameType1; calls runGame1()
      */
     void gameType1() {
         textLabel.setFont(new Font("Bradley Hand ITC", Font.PLAIN, 25));
@@ -124,10 +127,14 @@ public class gameMenu {
 
     }
 
-
+    /**
+     * Begin button and mechanics for gameMode1
+     * @param gameInstance a game
+     */
     void runGame1(gameMode1 gameInstance){
         ImageIcon currLetter = gameInstance.getRandomLetter();
         JButton letter = new JButton("Begin");
+        letter.setBackground(Color.ORANGE);
         letter.setBounds(( (boardWidth/2)-(boardWidth/10)),  ( (boardHeight/3)-(boardHeight/20)), boardWidth/5, boardHeight/10);
 
         nonConstantItems.add(letter);
@@ -136,7 +143,7 @@ public class gameMenu {
         letter.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(letter.hasFocus()) {
+                if (letter.hasFocus()) {
                     //System.out.println("has focus");
                     letter.setIcon(currLetter);
                     //TODO: Fix annoying blue bit left of the icon
@@ -194,12 +201,16 @@ public class gameMenu {
         frame.setFocusable(true);
     }
 
+    /**
+     * Mechanics for ending any game mode
+     * @param gameInstance a game
+     */
     void gameOver(gameModes gameInstance){
         //System.out.println(nonConstantItems);
         nonConstantItems.forEach(x -> frame.remove(x));
 
         frame.repaint();
-        if(gameInstance.getMistakes()!=0) {
+        if(gameInstance.getScore() > 0) {
             gameInstance.writeScore();
             gameOverScreen(gameInstance);
         }
@@ -208,6 +219,10 @@ public class gameMenu {
         }
     }
 
+    /**
+     * Graphics for the game over screen
+     * @param gameInstance a game that is ending
+     */
     void gameOverScreen(gameModes gameInstance){
 
 //        textLabel.setFont(new Font("Bradley Hand ITC", Font.PLAIN, 50));
@@ -257,9 +272,13 @@ public class gameMenu {
 
         nonConstantItems.addAll(gameOverParts);
         gameOverParts.forEach(x -> frame.add(x));
-        
+
     }
 
+    /**
+     * Adds the return to menu button
+     * @param gameInstance a game which the button will act upon
+     */
     void addReturnToMenu(gameModes gameInstance){
         returnToMenu.addActionListener(new ActionListener() {
             @Override
@@ -272,7 +291,7 @@ public class gameMenu {
 
 
     /**
-     * Runs gameType 2
+     * Runs gameType2
      */
     void gameType2() {
         frame.repaint();
@@ -309,6 +328,9 @@ public class gameMenu {
 //                System.out.println("interrupted");
                 Thread.currentThread().interrupt();
             }
+        }
+        if (getClass().getResource("question.png") == null) {
+            throw new RuntimeException("Could not find question.png. Check your file location!");
         }
         ImageIcon question = new ImageIcon(getClass().getResource("question.png"));
         letter.setIcon(question);
@@ -349,7 +371,7 @@ public class gameMenu {
                     letter.setBounds(boardWidth / 2 - (int) (0.5 * currLetter.getIconWidth()),
                             (boardHeight / 2 - currLetter.getIconHeight()),
                             currLetter.getIconWidth(), currLetter.getIconHeight());
-                    //TODO: Figure out why icon is not changing
+                    //TODO: Figure out why icon is not updating
                     try {
                         Thread.sleep(500);          // wait 0.5 seconds between letters
                     } catch (InterruptedException ex) {
