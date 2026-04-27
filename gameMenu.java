@@ -54,9 +54,8 @@ public class gameMenu {
         frame.add(textPanel);
         constantItems.add(textPanel);
 
-        //TODO: figure out why this doesn't show up: fixed was just too low but it was showing up
         JLabel copyright = new JLabel();
-        copyright.setFont(new Font("Bradley Hand ITC", Font.PLAIN,12));
+        copyright.setFont(new Font("Bradley Hand ITC", Font.PLAIN,14));
         copyright.setHorizontalAlignment(JLabel.CENTER);
         copyright.setText("Copyright 2026 by Charrah McNider");
         copyright.setOpaque(true);
