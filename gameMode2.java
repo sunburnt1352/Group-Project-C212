@@ -6,7 +6,7 @@ import java.time.LocalTime;
 import java.util.LinkedList;
 import java.util.List;
 
-public class gameMode2 {
+public class gameMode2 implements IGameInstance {
 
     int SCORE;
     private String currWord;
@@ -38,18 +38,13 @@ public class gameMode2 {
             return res;
         }
         catch (IOException ex) { throw new RuntimeException(ex); }
-
-//        Scanner scanner = new Scanner(new File("dictionary.txt").getAbsolutePath());
-//        for (int i = 0; i < n; i++) {
-//            System.out.println("scanning");
-//            scanner.nextLine();
-//        }
     }
 
     /**
      * Writes the final score to a file
      */
-    void writeScore() {
+    @Override
+    public void writeScore() {
         List<String> lines = new LinkedList<>();
         try {                                       // check if any data already exist
             lines = Files.readAllLines(Path.of(
@@ -69,7 +64,8 @@ public class gameMode2 {
      * Getter for the score
      * @return score
      */
-    public int getSCORE() {
+    @Override
+    public int getScore() {
         return SCORE;
     }
 
@@ -85,6 +81,7 @@ public class gameMode2 {
      * Getter for the mistakes
      * @return number of mistakes made
      */
+    @Override
     public int getMistakes() {
         return this.MISTAKES;
     }
@@ -92,6 +89,7 @@ public class gameMode2 {
     /**
      * Setter for the mistakes
      */
+    @Override
     public void setMistakes(int n) {
         this.MISTAKES = n;
     }
