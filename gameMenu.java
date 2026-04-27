@@ -3,6 +3,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedList;
 
 public class gameMenu {
@@ -12,7 +13,9 @@ public class gameMenu {
     JFrame frame = new JFrame("Learn Sign Language!");
     JLabel textLabel = new JLabel();
     JPanel textPanel = new JPanel();
-    JPanel constantItems= new JPanel();
+    Collection<JComponent> constantItems= new ArrayList<>();
+    Collection<JComponent> nonConstantItems= new ArrayList<>();
+    JButton returnToMenu= new JButton("Return to Menu");
 
     /**
      * Constructor for the starting menu; creates the frame
@@ -24,6 +27,14 @@ public class gameMenu {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(null);
 
+
+
+        //JButton returnToMenu = new JButton("Return to Menu");
+        returnToMenu.setBounds(20, 20, (boardHeight / 4), (boardWidth / 10));
+        returnToMenu.setBackground(Color.ORANGE);
+        returnToMenu.setOpaque(true);
+        nonConstantItems.add(returnToMenu);
+
         menuMode();
 
         frame.setVisible(true);
@@ -31,7 +42,7 @@ public class gameMenu {
 
 
     void menuMode() {
-        frame.repaint();
+        //frame.repaint();
         textLabel.setFont(new Font("Bradley Hand ITC", Font.PLAIN, 50));
         textLabel.setHorizontalAlignment(JLabel.CENTER);
         textLabel.setText("Menu");
@@ -41,6 +52,7 @@ public class gameMenu {
         textPanel.add(textLabel);
         textPanel.setBounds((boardWidth/2)-(boardWidth/10), 0, (boardWidth/5), boardHeight / 10);
         frame.add(textPanel);
+        constantItems.add(textPanel);
 
         //TODO: figure out why this doesn't show up: fixed was just too low but it was showing up
         JLabel copyright = new JLabel();
@@ -53,6 +65,7 @@ public class gameMenu {
         copyPanel.add(copyright);
         copyPanel.setBounds(0,(int) (boardHeight*0.85),boardWidth,(int) (boardHeight/10.0));
         frame.add(copyPanel);
+        constantItems.add(copyPanel);
 
         JButton button1 = new JButton("Letter Mode");
         //button1.setAlignmentY(40); button1.setAlignmentX(40);
@@ -66,6 +79,7 @@ public class gameMenu {
             }
         });
 
+        nonConstantItems.add(button1);
         frame.add(button1);
 
         JButton button2 = new JButton("Word Mode");
@@ -78,16 +92,16 @@ public class gameMenu {
                 gameType2();
             }
         });
-
+        nonConstantItems.add(button2);
         frame.add(button2);
     }
+
+
 
     /**
      * Runs gameType1
      */
     void gameType1() {
-
-
         textLabel.setFont(new Font("Bradley Hand ITC", Font.PLAIN, 25));
         textLabel.setHorizontalAlignment(JLabel.CENTER);
         textLabel.setText("Letter Mode");
@@ -99,23 +113,9 @@ public class gameMenu {
         frame.add(textPanel);
 
 
-        JButton menu = new JButton("Return to Menu");
-        menu.setBounds(20, 20, (boardHeight / 4), (boardWidth / 10));
-        menu.setBackground(Color.ORANGE);
-        menu.setOpaque(true);
-        //TODO: Bring menu to front of textLabel
-
         gameMode1 gameInstance = new gameMode1();
 
-        menu.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                gameInstance.writeScore();
-                frame.getContentPane().removeAll();
-                menuMode();
-            }
-        });
-        frame.add(menu);
+        addReturnToMenu(gameInstance);
 
         runGame1(gameInstance);
         // https://math.hws.edu/eck/cs124/javanotes3/c6/s5.html
@@ -131,6 +131,7 @@ public class gameMenu {
         JButton letter = new JButton("Begin");
         letter.setBounds(( (boardWidth/2)-(boardWidth/10)),  ( (boardHeight/3)-(boardHeight/20)), boardWidth/5, boardHeight/10);
 
+        nonConstantItems.add(letter);
 
         //TODO: not the prettiest code, but it works, need to figure out how to make it look better
         letter.addActionListener(new ActionListener() {
@@ -192,19 +193,92 @@ public class gameMenu {
                 }
             }
         });
-
-
         frame.add(letter);
         frame.setFocusable(true);
     }
 
+
+
     void gameOver(gameModes gameInstance){
-        gameInstance.writeScore();
-        frame.getContentPane().removeAll();
+        //System.out.println(nonConstantItems);
+        nonConstantItems.forEach(x -> frame.remove(x));
 
 
+        frame.repaint();
+        if(gameInstance.getMistakes()!=0) {
+            gameInstance.writeScore();
+            gameOverScreen(gameInstance);
+        }
+        else {
+            menuMode();
+        }
 
-        menuMode();
+
+    }
+
+    void gameOverScreen(gameModes gameInstance){
+
+//        textLabel.setFont(new Font("Bradley Hand ITC", Font.PLAIN, 50));
+//        textLabel.setHorizontalAlignment(JLabel.CENTER);
+//        textLabel.setText("Menu");
+//        textLabel.setOpaque(true);
+//
+//        textPanel.setLayout(new BorderLayout());
+//        textPanel.add(textLabel);
+//        textPanel.setBounds((boardWidth/2)-(boardWidth/10), 0, (boardWidth/5), boardHeight / 10);
+//        frame.add(textPanel);
+//        constantItems.add(textPanel);
+
+        Collection<JComponent> gameOverParts= new ArrayList<>();
+        JPanel gameOverStats= new JPanel();
+        JLabel gameOverMsg= new JLabel("Game Over");
+        gameOverParts.add(gameOverStats);
+        gameOverParts.add(gameOverMsg);
+
+
+        gameOverMsg.setFont(new Font("Bradley Hand ITC", Font.PLAIN, 50));
+        gameOverMsg.setHorizontalAlignment(JLabel.CENTER);
+        gameOverMsg.setText("Game Over");
+        //gameOverStats.setBackground(Color.red);
+        gameOverMsg.setOpaque(true);
+
+        gameOverStats.setLayout(new BorderLayout());
+        gameOverStats.add(gameOverMsg);
+        gameOverStats.setBounds((boardWidth/2)-(boardWidth/10), (boardHeight/5), (boardWidth/5), boardHeight / 10);
+        frame.add(gameOverStats);
+
+        JButton menu= new JButton("Menu");
+        menu.setBounds(boardWidth/3, boardHeight/2, (boardWidth/10),(boardHeight/10));
+        menu.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gameOverParts.forEach(x -> frame.remove(x));
+                frame.repaint();
+                menuMode();
+            }
+        });
+
+
+        JButton playAgain= new JButton("Play Again?");
+        playAgain.setBounds(boardWidth/2, boardHeight/2, (boardWidth/10),(boardHeight/10));
+        gameOverParts.add(menu);
+        gameOverParts.add(playAgain);
+
+        gameOverParts.forEach(x -> nonConstantItems.add(x));
+        gameOverParts.forEach(x -> frame.add(x));
+
+
+    }
+
+
+    void addReturnToMenu(gameModes gameInstance){
+        returnToMenu.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gameOver(gameInstance);
+            }
+        });
+        frame.add(returnToMenu);
     }
 
 
@@ -224,23 +298,14 @@ public class gameMenu {
         //textPanel.setBounds(0, 0, boardWidth, boardHeight / 10);
         frame.add(textPanel);
 
-        JButton menu = new JButton("Return to Menu");
-        menu.setBounds(0, 0, (boardHeight / 6), (boardWidth / 10));
-        menu.setBackground(Color.ORANGE);
+
         //TODO: Bring menu to front of textLabel
 
         gameMode2 gameInstance = new gameMode2();
 
-        menu.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                gameInstance.writeScore();
-                frame.getContentPane().removeAll();
-                menuMode();
-            }
-        });
+        addReturnToMenu(gameInstance);
 
-        frame.add(menu);
+
 
         java.util.List<String> word = gameInstance.randomWord();
         java.util.List<Character> letters = new ArrayList<>();
@@ -289,10 +354,7 @@ public class gameMenu {
                 }
 
                 if (gameInstance.getMistakes() >= 3) {
-                    // Write the score to a file
-                    gameInstance.writeScore();
-                    frame.getContentPane().removeAll();
-                    menuMode();
+                    gameOver(gameInstance);
                 }
                 java.util.List<String> word = gameInstance.randomWord();
                 java.util.List<Character> letters = new ArrayList<>();
