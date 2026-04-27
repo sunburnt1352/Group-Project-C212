@@ -41,7 +41,7 @@ public class gameMenu {
         textPanel.setBounds(0, 0, boardWidth, boardHeight / 10);
         frame.add(textPanel);
 
-        JButton button1 = new JButton("Game Mode 1");
+        JButton button1 = new JButton("Letter Mode");
         //button1.setAlignmentY(40); button1.setAlignmentX(40);
         button1.setBounds(((boardWidth / 2) - (boardWidth / 10)), ((boardHeight - (4 * (boardHeight / 5)))), boardWidth / 5, boardHeight / 10);
         button1.setBackground(Color.pink);
@@ -55,7 +55,7 @@ public class gameMenu {
 
         frame.add(button1);
 
-        JButton button2 = new JButton("Game Mode 2");
+        JButton button2 = new JButton("Word Mode");
         button2.setBounds(((boardWidth / 2) - (boardWidth / 10)), ((boardHeight - (3 * (boardHeight / 5)))), boardWidth / 5, boardHeight / 10);
         button2.setBackground(Color.orange);
         button2.addActionListener(new ActionListener() {
@@ -78,7 +78,7 @@ public class gameMenu {
 
         textLabel.setFont(new Font("Bradley Hand ITC", Font.PLAIN, 25));
         textLabel.setHorizontalAlignment(JLabel.CENTER);
-        textLabel.setText("Game Mode 1");
+        textLabel.setText("Letter Mode");
         textLabel.setOpaque(true);
 
         textPanel.setLayout(new BorderLayout());
@@ -171,7 +171,7 @@ public class gameMenu {
 
         textLabel.setFont(new Font("Bradley Hand ITC", Font.PLAIN, 25));
         textLabel.setHorizontalAlignment(JLabel.CENTER);
-        textLabel.setText("Game Mode 2");
+        textLabel.setText("Word Mode");
         textLabel.setOpaque(true);
 
         textPanel.setLayout(new BorderLayout());
