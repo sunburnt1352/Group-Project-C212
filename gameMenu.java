@@ -15,7 +15,6 @@ public class gameMenu {
      * Constructor for the starting menu; creates the frame
      */
     gameMenu() {
-        // frame.setVisible(true);
         frame.setSize(boardWidth, boardHeight);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
@@ -23,7 +22,6 @@ public class gameMenu {
         frame.setLayout(null);
 
         menuMode();
-        //gameType1();
 
         frame.setVisible(true);
     }
@@ -40,6 +38,18 @@ public class gameMenu {
         textPanel.add(textLabel);
         textPanel.setBounds(0, 0, boardWidth, boardHeight / 10);
         frame.add(textPanel);
+
+        //TODO: figure out why this doesn't show up
+        JLabel copyright = new JLabel();
+        copyright.setFont(new Font("Bradley Hand ITC", Font.PLAIN,12));
+        copyright.setHorizontalAlignment(JLabel.CENTER);
+        copyright.setText("Copyright 2026 by Charrah McNider");
+        copyright.setOpaque(true);
+        JPanel copyPanel = new JPanel();
+        copyPanel.setLayout(new BorderLayout());
+        copyPanel.add(copyright);
+        copyPanel.setBounds(0,(int) (boardHeight*0.9),boardWidth,(int) (boardHeight/10.0));
+        frame.add(copyPanel);
 
         JButton button1 = new JButton("Letter Mode");
         //button1.setAlignmentY(40); button1.setAlignmentX(40);
