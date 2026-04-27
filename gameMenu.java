@@ -41,7 +41,7 @@ public class gameMenu {
         textPanel.setBounds(0, 0, boardWidth, boardHeight / 10);
         frame.add(textPanel);
 
-        //TODO: figure out why this doesn't show up
+        //TODO: figure out why this doesn't show up: fixed was just too low but it was showing up
         JLabel copyright = new JLabel();
         copyright.setFont(new Font("Bradley Hand ITC", Font.PLAIN,12));
         copyright.setHorizontalAlignment(JLabel.CENTER);
@@ -50,7 +50,7 @@ public class gameMenu {
         JPanel copyPanel = new JPanel();
         copyPanel.setLayout(new BorderLayout());
         copyPanel.add(copyright);
-        copyPanel.setBounds(0,(int) (boardHeight*0.9),boardWidth,(int) (boardHeight/10.0));
+        copyPanel.setBounds(0,(int) (boardHeight*0.85),boardWidth,(int) (boardHeight/10.0));
         frame.add(copyPanel);
 
         JButton button1 = new JButton("Letter Mode");
