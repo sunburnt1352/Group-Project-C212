@@ -6,7 +6,7 @@ import java.time.LocalTime;
 import java.util.LinkedList;
 import java.util.List;
 
-public class gameMode2  extends gameModes implements IGameInstance {
+public class gameMode2 extends gameModes {
 
     int SCORE;
     private String currWord;
@@ -37,7 +37,7 @@ public class gameMode2  extends gameModes implements IGameInstance {
             }
             return res;
         }
-        catch (IOException ex) { throw new RuntimeException(ex); }
+        catch (IOException ex) { throw new RuntimeException("Could not find dictionary.txt. Check your file structure!"); }
     }
 
     /**
@@ -56,7 +56,7 @@ public class gameMode2  extends gameModes implements IGameInstance {
                     LocalTime.now().toString().substring(0, 8)
                     + " Word Mode Score - " + this.SCORE);
         } catch (IOException ex) {
-            throw new RuntimeException(ex);     // throw exception if error occurs
+            throw new RuntimeException("An error occurred writing your score file: "+ex);     // throw exception if error occurs
         }
     }
 
