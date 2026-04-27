@@ -139,6 +139,7 @@ public class gameMenu {
                 if(letter.hasFocus()) {
                     //System.out.println("has focus");
                     letter.setIcon(currLetter);
+                    //TODO: Fix annoying blue bit left of the icon
                     letter.setBounds(boardWidth/2 - (int) (0.5*currLetter.getIconWidth()),
                             (boardHeight/2 - currLetter.getIconHeight()),
                             currLetter.getIconWidth(), currLetter.getIconHeight());
@@ -178,7 +179,6 @@ public class gameMenu {
                             letter.setIcon(currLetter);
                         }
 
-
                         @Override
                         public void keyPressed(KeyEvent e) {
                         }
@@ -186,8 +186,6 @@ public class gameMenu {
                         @Override
                         public void keyReleased(KeyEvent e) {
                         }
-
-
                     });
                 }
             }
@@ -196,12 +194,9 @@ public class gameMenu {
         frame.setFocusable(true);
     }
 
-
-
     void gameOver(gameModes gameInstance){
         //System.out.println(nonConstantItems);
         nonConstantItems.forEach(x -> frame.remove(x));
-
 
         frame.repaint();
         if(gameInstance.getMistakes()!=0) {
@@ -211,8 +206,6 @@ public class gameMenu {
         else {
             menuMode();
         }
-
-
     }
 
     void gameOverScreen(gameModes gameInstance){
@@ -233,7 +226,6 @@ public class gameMenu {
         JLabel gameOverMsg= new JLabel("Game Over");
         gameOverParts.add(gameOverStats);
         gameOverParts.add(gameOverMsg);
-
 
         gameOverMsg.setFont(new Font("Bradley Hand ITC", Font.PLAIN, 50));
         gameOverMsg.setHorizontalAlignment(JLabel.CENTER);
@@ -263,12 +255,10 @@ public class gameMenu {
         gameOverParts.add(menu);
         gameOverParts.add(playAgain);
 
-        gameOverParts.forEach(x -> nonConstantItems.add(x));
+        nonConstantItems.addAll(gameOverParts);
         gameOverParts.forEach(x -> frame.add(x));
-
-
+        
     }
-
 
     void addReturnToMenu(gameModes gameInstance){
         returnToMenu.addActionListener(new ActionListener() {
@@ -297,14 +287,9 @@ public class gameMenu {
         //textPanel.setBounds(0, 0, boardWidth, boardHeight / 10);
         frame.add(textPanel);
 
-
-        //TODO: Bring menu to front of textLabel
-
         gameMode2 gameInstance = new gameMode2();
 
         addReturnToMenu(gameInstance);
-
-
 
         java.util.List<String> word = gameInstance.randomWord();
         java.util.List<Character> letters = new ArrayList<>();
