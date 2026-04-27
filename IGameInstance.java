@@ -1,4 +1,4 @@
-public interface Actions {
+public interface IGameInstance {
 
     void writeScore();
 
