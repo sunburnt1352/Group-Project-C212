@@ -202,6 +202,131 @@ public class gameMenu {
     }
 
     /**
+     * Runs gameType2
+     */
+    void gameType2() {
+//        frame.repaint();
+
+        textLabel.setFont(new Font("Bradley Hand ITC", Font.PLAIN, 25));
+        textLabel.setHorizontalAlignment(JLabel.CENTER);
+        textLabel.setText("Word Mode");
+        textLabel.setOpaque(true);
+
+        textPanel.setLayout(new BorderLayout());
+        textPanel.add(textLabel);
+        //textPanel.setBounds(0, 0, boardWidth, boardHeight / 10);
+        frame.add(textPanel);
+
+        gameMode2 gameInstance = new gameMode2();
+
+        addReturnToMenu(gameInstance);
+
+        JButton letter = new JButton();
+        nonConstantItems.add(letter);
+        final java.util.List<Character>[] letters = new java.util.List[]{newWord(gameInstance, letter)};
+        java.util.List<Character> typed = new LinkedList<>();
+        letter.addKeyListener(new KeyListener() {
+
+            /**
+             * Check whether a typed key was correct; change images; increment score
+             *    and mistakes; end game
+             * @param e keystroke
+             */
+            @Override
+            public void keyTyped(KeyEvent e) {
+                typed.add(e.getKeyChar());
+//                System.out.println(typed);
+//                System.out.println(letters[0]);
+                //System.out.println(gameInstance.getMistakes());
+                if (typed.equals(letters[0])) {
+                    gameInstance.SCORE += 10 * letters[0].size();
+                    typed.clear();
+                    letters[0] = newWord(gameInstance,letter);
+                }
+                else if (!equalSoFar(typed,letters[0])) {
+//                    System.out.println("had a mistake");
+                    gameInstance.setMistakes(gameInstance.getMistakes() + 1);
+                    typed.clear();
+                    if (gameInstance.getMistakes() < 3) {
+                        letters[0] = newWord(gameInstance,letter);
+                    }
+                }
+                if (gameInstance.getMistakes() >= 3) {
+                    gameOver(gameInstance);
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {}
+
+            @Override
+            public void keyReleased(KeyEvent e) {}
+
+        });
+
+        frame.add(letter);
+        frame.setFocusable(true);
+        frame.repaint();
+        frame.setVisible(true);
+
+    }
+
+    /**
+     * Flashes a new word on the screen
+     * @param gameInstance a game
+     * @param letter icon being changed
+     * @return list of lowercase characters in the word
+     */
+    java.util.List<Character> newWord(gameMode2 gameInstance, JButton letter) {
+        java.util.List<String> word = gameInstance.randomWord();
+        java.util.List<Character> letters = new ArrayList<>();
+        for (String s : word) {
+            letters.add(s.charAt(4));
+            if (getClass().getResource(s) == null) {
+                throw new RuntimeException("Could not find "+s+". Check your file structure!");
+            }
+            ImageIcon currLetter = new ImageIcon(getClass().getResource(s));
+            letter.setBounds(boardWidth / 2 - (int) (0.5 * currLetter.getIconWidth()),
+                    (boardHeight / 2 - currLetter.getIconHeight()),
+                    currLetter.getIconWidth(), currLetter.getIconHeight());
+            letter.setIcon(currLetter);
+//            System.out.println(letter.getIcon());
+//            frame.add(letter);
+//            frame.repaint();
+            //TODO: Figure out why icons aren't showing
+            try {
+                Thread.sleep(500);          // wait 0.5 seconds between letters
+            } catch (InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
+        }
+        if (getClass().getResource("question.png") == null) {
+            throw new RuntimeException("Could not find question.png. Check your file structure!");
+        }
+        ImageIcon question = new ImageIcon(getClass().getResource("question.png"));
+        letter.setIcon(question);
+        letter.setBounds(boardWidth / 2 - (int) (0.5 * question.getIconWidth()),
+                (boardHeight / 2 - question.getIconHeight()),
+                question.getIconWidth(), question.getIconHeight());
+        return letters;
+    }
+
+    /**
+     * Checks whether a smaller list matches the elements of a bigger list so far
+     * @param ls1 smaller list
+     * @param ls2 bigger or equal list
+     * @return whether all elements of ls1 are in ls2 in order
+     * @param <T> any type
+     */
+    <T> boolean equalSoFar(java.util.List<T> ls1, java.util.List<T> ls2) {
+        for (int i = 0; i < ls1.size(); i++) {
+            if (ls1.get(i) != ls2.get(i)) { return false; }
+        }
+        return true;
+    }
+
+
+    /**
      * Mechanics for ending any game mode
      * @param gameInstance a game
      */
@@ -286,127 +411,5 @@ public class gameMenu {
             }
         });
         frame.add(returnToMenu);
-    }
-
-
-    /**
-     * Runs gameType2
-     */
-    void gameType2() {
-        frame.repaint();
-
-        textLabel.setFont(new Font("Bradley Hand ITC", Font.PLAIN, 25));
-        textLabel.setHorizontalAlignment(JLabel.CENTER);
-        textLabel.setText("Word Mode");
-        textLabel.setOpaque(true);
-
-        textPanel.setLayout(new BorderLayout());
-        textPanel.add(textLabel);
-        //textPanel.setBounds(0, 0, boardWidth, boardHeight / 10);
-        frame.add(textPanel);
-
-        gameMode2 gameInstance = new gameMode2();
-
-        addReturnToMenu(gameInstance);
-
-        JButton letter = new JButton();
-        nonConstantItems.add(letter);
-        final java.util.List<Character>[] letters = new java.util.List[]{newWord(gameInstance, letter)};
-        java.util.List<Character> typed = new LinkedList<>();
-        letter.addKeyListener(new KeyListener() {
-
-            /**
-             * Check whether a typed key was correct; change images; increment score
-             *    and mistakes; end game
-             * @param e keystroke
-             */
-            @Override
-            public void keyTyped(KeyEvent e) {
-                typed.add(e.getKeyChar());
-//                System.out.println(typed);
-//                System.out.println(letters[0]);
-                //System.out.println(gameInstance.getMistakes());
-                if (typed.equals(letters[0])) {
-                    gameInstance.SCORE += 10 * letters[0].size();
-                    typed.clear();
-                    letters[0] = newWord(gameInstance,letter);
-                }
-                else if (!equalSoFar(typed,letters[0])) {
-//                    System.out.println("had a mistake");
-                    gameInstance.setMistakes(gameInstance.getMistakes() + 1);
-                    typed.clear();
-                    if (gameInstance.getMistakes() < 3) {
-                        letters[0] = newWord(gameInstance,letter);
-                    }
-                }
-                if (gameInstance.getMistakes() >= 3) {
-                    gameOver(gameInstance);
-                }
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {}
-
-            @Override
-            public void keyReleased(KeyEvent e) {}
-
-        });
-
-        frame.add(letter);
-        frame.setFocusable(true);
-        frame.repaint();
-        frame.setVisible(true);
-
-    }
-
-    /**
-     * Flashes a new word on the screen
-     * @param gameInstance a game
-     * @param letter icon being changed
-     * @return list of lowercase characters in the word
-     */
-    java.util.List<Character> newWord(gameMode2 gameInstance, JButton letter) {
-        java.util.List<String> word = gameInstance.randomWord();
-                java.util.List<Character> letters = new ArrayList<>();
-                for (String s : word) {
-                    letters.add(s.charAt(4));
-                    if (getClass().getResource(s) == null) {
-                        throw new RuntimeException("Could not find "+s+". Check your file structure!");
-                    }
-                    ImageIcon currLetter = new ImageIcon(getClass().getResource(s));
-                    letter.setIcon(currLetter);
-                    letter.setBounds(boardWidth / 2 - (int) (0.5 * currLetter.getIconWidth()),
-                            (boardHeight / 2 - currLetter.getIconHeight()),
-                            currLetter.getIconWidth(), currLetter.getIconHeight());
-                    //TODO: Figure out why icons aren't showing
-                    try {
-                        Thread.sleep(500);          // wait 0.5 seconds between letters
-                    } catch (InterruptedException ex) {
-                        Thread.currentThread().interrupt();
-                    }
-                }
-        if (getClass().getResource("question.png") == null) {
-            throw new RuntimeException("Could not find question.png. Check your file structure!");
-        }
-        ImageIcon question = new ImageIcon(getClass().getResource("question.png"));
-        letter.setIcon(question);
-        letter.setBounds(boardWidth / 2 - (int) (0.5 * question.getIconWidth()),
-                (boardHeight / 2 - question.getIconHeight()),
-                question.getIconWidth(), question.getIconHeight());
-        return letters;
-    }
-
-    /**
-     * Checks whether a smaller list matches the elements of a bigger list so far
-     * @param ls1 smaller list
-     * @param ls2 bigger or equal list
-     * @return whether all elements of ls1 are in ls2 in order
-     * @param <T> any type
-     */
-    <T> boolean equalSoFar(java.util.List<T> ls1, java.util.List<T> ls2) {
-        for (int i = 0; i < ls1.size(); i++) {
-            if (ls1.get(i) != ls2.get(i)) { return false; }
-        }
-        return true;
     }
 }
