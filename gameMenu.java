@@ -5,6 +5,8 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class gameMenu {
@@ -196,17 +198,22 @@ public class gameMenu {
                                 gameInstance.setMistakes(gameInstance.getMistakes() + 1);
                                 mistakeCounter.setText("Mistakes: "+gameInstance.getMistakes());
 
-
-                                explainMistake.setText("Wrong, letter was : "+gameInstance.getCurrLetter());
-                                explainMistake.setFont(new Font("Bradley Hand ITC", Font.PLAIN, 25));
+                                explainMistake.setText("Wrong, letter was: "+Character.toUpperCase(gameInstance.getCurrLetter()));
+                                explainMistake.setFont(new Font("Bradley Hand ITC", Font.PLAIN, 20));
                                 explainMistake.setHorizontalAlignment(JLabel.CENTER);
                                 explainMistake.setOpaque(true);
-                                explainMistake.setBounds(boardWidth/2 - (int) (0.5*currLetter.getIconWidth()),
-                                        (boardHeight/2 - currLetter.getIconHeight()-boardHeight/10),
-                                        boardWidth/3, boardHeight/8);
-
+                                explainMistake.setBounds(boardWidth/4,
+                                        (boardHeight/2-300),
+                                        boardWidth/2, boardHeight/8);
+                                explainMistake.setVisible(true);
                                 frame.add(explainMistake);
-
+                                ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+                                executorService.schedule(() -> {
+                                    explainMistake.setText(null);
+                                    explainMistake.setVisible(false);
+                                }, 1, TimeUnit.SECONDS);
+                                //TODO: Why is the explanation cut off on the left?
+                                //TODO: Delay next icon until explanation disappears (1 sec)
                             }
 
                             //if it is 3 mistakes, run game over code
@@ -214,25 +221,26 @@ public class gameMenu {
                                 gameOver(gameInstance);
                             }
 
+                            ImageIcon currLetter = gameInstance.getRandomLetter();
+                            letter.setBounds(boardWidth / 2 - (int) (0.5 * currLetter.getIconWidth()),
+                                    (boardHeight / 2 - currLetter.getIconHeight()),
+                                    currLetter.getIconWidth(), currLetter.getIconHeight());
+                            letter.setIcon(currLetter);
 
-                            if(explainMistake.isValid()){
-                                letter.addActionListener(new ActionListener() {
-                                    @Override
-                                    public void actionPerformed(ActionEvent e) {
-                                        frame.remove(explainMistake);
-                                    }
-                                });
+//                            if(explainMistake.isValid()){
+//                                letter.addActionListener(new ActionListener() {
+//                                    @Override
+//                                    public void actionPerformed(ActionEvent e) {
+//                                        frame.remove(explainMistake);
+//                                    }
+//                                });
 
                             }
-                            if(!explainMistake.isValid()) {
-                                ImageIcon currLetter = gameInstance.getRandomLetter();
-                                letter.setBounds(boardWidth / 2 - (int) (0.5 * currLetter.getIconWidth()),
-                                        (boardHeight / 2 - currLetter.getIconHeight()),
-                                        currLetter.getIconWidth(), currLetter.getIconHeight());
-                                letter.setIcon(currLetter);
+//                            if(!explainMistake.isValid()) {
+
                                 //frame.remove(explainMistake);
-                            }
-                        }
+//                            }
+//                        }
 
                         @Override
                         public void keyPressed(KeyEvent e) {
@@ -249,7 +257,7 @@ public class gameMenu {
         frame.setFocusable(true);
     }
 
-
+    JButton letter = new JButton();
 
     /**
      * Runs gameType2
@@ -271,9 +279,9 @@ public class gameMenu {
 
         addReturnToMenu(gameInstance);
 
-        JButton letter = new JButton();
+//        JButton letter = new JButton();
         nonConstantItems.add(letter);
-        final java.util.List<Character>[] letters = new java.util.List[]{newWord(gameInstance, letter)};
+        final java.util.List<Character>[] letters = new java.util.List[]{newWord(gameInstance)};
         java.util.List<Character> typed = new LinkedList<>();
         letter.addKeyListener(new KeyListener() {
 
@@ -287,18 +295,18 @@ public class gameMenu {
                 typed.add(e.getKeyChar());
 //                System.out.println(typed);
 //                System.out.println(letters[0]);
-                //System.out.println(gameInstance.getMistakes());
+//                System.out.println(gameInstance.getMistakes());
                 if (typed.equals(letters[0])) {
                     gameInstance.SCORE += 10 * letters[0].size();
                     typed.clear();
-                    letters[0] = newWord(gameInstance,letter);
+                    letters[0] = newWord(gameInstance);
                 }
                 else if (!equalSoFar(typed,letters[0])) {
 //                    System.out.println("had a mistake");
                     gameInstance.setMistakes(gameInstance.getMistakes() + 1);
                     typed.clear();
                     if (gameInstance.getMistakes() < 3) {
-                        letters[0] = newWord(gameInstance,letter);
+                        letters[0] = newWord(gameInstance);
                     }
                 }
                 if (gameInstance.getMistakes() >= 3) {
@@ -324,10 +332,10 @@ public class gameMenu {
     /**
      * Flashes a new word on the screen
      * @param gameInstance a game
-     * @param letter icon being changed
+//     * @param letter icon being changed
      * @return list of lowercase characters in the word
      */
-    java.util.List<Character> newWord(gameMode2 gameInstance, JButton letter) {
+    java.util.List<Character> newWord(gameMode2 gameInstance) {
         java.util.List<String> word = gameInstance.randomWord();
         java.util.List<Character> letters = new ArrayList<>();
         for (String s : word) {
@@ -419,7 +427,7 @@ public class gameMenu {
         gameOverMsg.setText("Game Over");
 
         gameOverMsg.setBounds((boardWidth/2)-(boardWidth/6), (boardHeight/5), (boardWidth/3), boardHeight / 10);
-        stats.setBounds( (boardWidth/2)-(boardWidth/10), (boardHeight/3), (boardWidth/5), boardHeight / 10);
+        stats.setBounds( (boardWidth/2)-(boardWidth/8), (boardHeight/3), (boardWidth/4), boardHeight / 10);
 
         frame.add(gameOverMsg);
         frame.add(stats);
@@ -447,6 +455,7 @@ public class gameMenu {
                 frame.repaint();
                 if (gameInstance instanceof gameMode1) { gameType1(); }
                 else { gameType2(); }
+                // TODO: Why does play again button break gameType2?
             }
         });
 
