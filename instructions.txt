@@ -1,0 +1,14 @@
+Welcome to our ASL Fingerspelling Program! We hope you enjoy learning
+finger signs with our game.
+
+To run the program, simply run "Main.java".
+
+You can choose between two game modes by interacting with the menu screen.
+The first is Letter Mode, where you can learn (or practice) the individual
+letters. Type the right letter to get points! The second is Word Mode,
+where you'll see a sequence of letters and must type the word.
+
+The game continues until you return to the menu or make 3 mistakes. Your
+results will be written to a daily output file!
+
+Enjoy our ASL game!
