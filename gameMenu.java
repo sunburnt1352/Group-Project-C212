@@ -104,6 +104,7 @@ public class gameMenu {
      * Builds the header and menu button for gameType1; calls runGame1()
      */
     void gameType1() {
+
         textLabel.setFont(new Font("Bradley Hand ITC", Font.PLAIN, 25));
         textLabel.setHorizontalAlignment(JLabel.CENTER);
         textLabel.setText("Letter Mode");
@@ -291,8 +292,6 @@ public class gameMenu {
                     currLetter.getIconWidth(), currLetter.getIconHeight());
             letter.setIcon(currLetter);
 //            System.out.println(letter.getIcon());
-//            frame.add(letter);
-//            frame.repaint();
             //TODO: Figure out why icons aren't showing
             try {
                 Thread.sleep(500);          // wait 0.5 seconds between letters
@@ -391,6 +390,15 @@ public class gameMenu {
 
         JButton playAgain= new JButton("Play Again?");
         playAgain.setBounds(boardWidth/2+20, boardHeight/2, boardWidth/5,boardHeight/10);
+        playAgain.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                nonConstantItems.forEach(x -> frame.remove(x));
+                if (gameInstance instanceof gameMode1) { gameType1(); }
+                else { gameType2(); }
+            }
+        });
+
         gameOverParts.add(menu);
         gameOverParts.add(playAgain);
 
