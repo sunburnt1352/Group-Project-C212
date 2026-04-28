@@ -338,34 +338,49 @@ public class gameMenu {
     java.util.List<Character> newWord(gameMode2 gameInstance) {
         java.util.List<String> word = gameInstance.randomWord();
         java.util.List<Character> letters = new ArrayList<>();
+
         for (String s : word) {
             letters.add(s.charAt(4));
             if (getClass().getResource(s) == null) {
                 throw new RuntimeException("Could not find "+s+". Check your file structure!");
             }
-            ImageIcon currLetter = new ImageIcon(getClass().getResource(s));
-            letter.setBounds(boardWidth / 2 - (int) (0.5 * currLetter.getIconWidth()),
-                    (boardHeight / 2 - currLetter.getIconHeight()),
-                    currLetter.getIconWidth(), currLetter.getIconHeight());
-            letter.setIcon(currLetter);
+//            ImageIcon currLetter = new ImageIcon(getClass().getResource(s));
+//            letter.setBounds(boardWidth / 2 - (int) (0.5 * currLetter.getIconWidth()),
+//                    (boardHeight / 2 - currLetter.getIconHeight()),
+//                    currLetter.getIconWidth(), currLetter.getIconHeight());
+//            letter.setIcon(currLetter);
+
+            ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+            executorService.schedule(() -> {
+                ImageIcon currLetter = new ImageIcon(getClass().getResource(s));
+                letter.setBounds(boardWidth / 2 - (int) (0.5 * currLetter.getIconWidth()),
+                        (boardHeight / 2 - currLetter.getIconHeight()),
+                        currLetter.getIconWidth(), currLetter.getIconHeight());
+                letter.setIcon(currLetter);
+            }, 500, TimeUnit.MILLISECONDS);
+
 //            System.out.println(letter.getIcon());
 //            frame.add(letter);
 //            frame.repaint();
             //TODO: Figure out why icons aren't showing
-            try {
-                Thread.sleep(500);          // wait 0.5 seconds between letters
-            } catch (InterruptedException ex) {
-                Thread.currentThread().interrupt();
-            }
+//            try {
+//                Thread.sleep(500);          // wait 0.5 seconds between letters
+//            } catch (InterruptedException ex) {
+//                Thread.currentThread().interrupt();
+//            }
         }
         if (getClass().getResource("question.png") == null) {
             throw new RuntimeException("Could not find question.png. Check your file structure!");
         }
-        ImageIcon question = new ImageIcon(getClass().getResource("question.png"));
-        letter.setIcon(question);
-        letter.setBounds(boardWidth / 2 - (int) (0.5 * question.getIconWidth()),
-                (boardHeight / 2 - question.getIconHeight()),
-                question.getIconWidth(), question.getIconHeight());
+
+        ScheduledExecutorService executorService2 = Executors.newSingleThreadScheduledExecutor();
+        executorService2.schedule(() -> {
+            ImageIcon question = new ImageIcon(getClass().getResource("question.png"));
+            letter.setIcon(question);
+            letter.setBounds(boardWidth / 2 - (int) (0.5 * question.getIconWidth()),
+                    (boardHeight / 2 - question.getIconHeight()),
+                    question.getIconWidth(), question.getIconHeight());
+        }, 500, TimeUnit.MILLISECONDS);
         return letters;
     }
 
@@ -415,8 +430,6 @@ public class gameMenu {
         JLabel stats= new JLabel("Score: "+gameInstance.getScore());
         gameOverParts.add(stats);
 
-
-
         gameOverMsg.setFont(new Font("Bradley Hand ITC", Font.PLAIN, 50));
         stats.setFont(new Font("Bradley Hand ITC", Font.PLAIN, 40));
 
@@ -431,7 +444,6 @@ public class gameMenu {
 
         frame.add(gameOverMsg);
         frame.add(stats);
-
 
         JButton menu= new JButton("Menu");
         menu.setBounds((int) (boardWidth*3/10.0)-20, boardHeight/2, boardWidth/5,boardHeight/10);
