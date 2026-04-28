@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.concurrent.TimeUnit;
 
 public class gameMenu {
     int boardWidth = 800;
@@ -104,7 +105,6 @@ public class gameMenu {
      * Builds the header and menu button for gameType1; calls runGame1()
      */
     void gameType1() {
-
         textLabel.setFont(new Font("Bradley Hand ITC", Font.PLAIN, 25));
         textLabel.setHorizontalAlignment(JLabel.CENTER);
         textLabel.setText("Letter Mode");
@@ -116,7 +116,12 @@ public class gameMenu {
         frame.add(textPanel);
 
 
+
+
         gameMode1 gameInstance = new gameMode1();
+
+
+
 
         addReturnToMenu(gameInstance);
 
@@ -133,6 +138,19 @@ public class gameMenu {
      * @param gameInstance a game
      */
     void runGame1(gameMode1 gameInstance){
+
+        JLabel mistakeCounter= new JLabel("Mistakes");
+        mistakeCounter.setText("Mistakes: "+gameInstance.getMistakes());
+        mistakeCounter.setFont(new Font("Bradley Hand ITC", Font.PLAIN, 25));
+        mistakeCounter.setHorizontalAlignment(JLabel.CENTER);
+        mistakeCounter.setOpaque(true);
+        mistakeCounter.setBounds((boardWidth-(boardWidth/3)), 0, (boardWidth/3), boardHeight / 10);
+        nonConstantItems.add(mistakeCounter);
+
+        frame.add(mistakeCounter);
+
+
+
         ImageIcon currLetter = gameInstance.getRandomLetter();
         JButton letter = new JButton("Begin");
         letter.setBackground(Color.PINK);
@@ -151,6 +169,9 @@ public class gameMenu {
                             currLetter.getIconWidth(), currLetter.getIconHeight());
                     letter.setIcon(currLetter);
                     letter.setText(null);
+
+
+                    JLabel explainMistake= new JLabel();
 
                     letter.addKeyListener(new KeyListener() {
 
@@ -173,6 +194,19 @@ public class gameMenu {
                             //if it is not the correct letter, adds a mistake
                             else {
                                 gameInstance.setMistakes(gameInstance.getMistakes() + 1);
+                                mistakeCounter.setText("Mistakes: "+gameInstance.getMistakes());
+
+
+                                explainMistake.setText("Wrong, letter was : "+gameInstance.getCurrLetter());
+                                explainMistake.setFont(new Font("Bradley Hand ITC", Font.PLAIN, 25));
+                                explainMistake.setHorizontalAlignment(JLabel.CENTER);
+                                explainMistake.setOpaque(true);
+                                explainMistake.setBounds(boardWidth/2 - (int) (0.5*currLetter.getIconWidth()),
+                                        (boardHeight/2 - currLetter.getIconHeight()-boardHeight/10),
+                                        boardWidth/3, boardHeight/8);
+
+                                frame.add(explainMistake);
+
                             }
 
                             //if it is 3 mistakes, run game over code
@@ -180,11 +214,24 @@ public class gameMenu {
                                 gameOver(gameInstance);
                             }
 
-                            ImageIcon currLetter = gameInstance.getRandomLetter();
-                            letter.setBounds(boardWidth / 2 - (int) (0.5 * currLetter.getIconWidth()),
-                                    (boardHeight / 2 - currLetter.getIconHeight()),
-                                    currLetter.getIconWidth(), currLetter.getIconHeight());
-                            letter.setIcon(currLetter);
+
+                            if(explainMistake.isValid()){
+                                letter.addActionListener(new ActionListener() {
+                                    @Override
+                                    public void actionPerformed(ActionEvent e) {
+                                        frame.remove(explainMistake);
+                                    }
+                                });
+
+                            }
+                            if(!explainMistake.isValid()) {
+                                ImageIcon currLetter = gameInstance.getRandomLetter();
+                                letter.setBounds(boardWidth / 2 - (int) (0.5 * currLetter.getIconWidth()),
+                                        (boardHeight / 2 - currLetter.getIconHeight()),
+                                        currLetter.getIconWidth(), currLetter.getIconHeight());
+                                letter.setIcon(currLetter);
+                                //frame.remove(explainMistake);
+                            }
                         }
 
                         @Override
@@ -201,6 +248,8 @@ public class gameMenu {
         frame.add(letter);
         frame.setFocusable(true);
     }
+
+
 
     /**
      * Runs gameType2
@@ -292,6 +341,8 @@ public class gameMenu {
                     currLetter.getIconWidth(), currLetter.getIconHeight());
             letter.setIcon(currLetter);
 //            System.out.println(letter.getIcon());
+//            frame.add(letter);
+//            frame.repaint();
             //TODO: Figure out why icons aren't showing
             try {
                 Thread.sleep(500);          // wait 0.5 seconds between letters
@@ -334,7 +385,7 @@ public class gameMenu {
         nonConstantItems.forEach(x -> frame.remove(x));
 
         frame.repaint();
-        if(gameInstance.getScore() > 0) {
+        if(gameInstance.getMistakes() > 0) {
             gameInstance.writeScore();
             gameOverScreen(gameInstance);
         }
@@ -348,34 +399,31 @@ public class gameMenu {
      * @param gameInstance a game that is ending
      */
     void gameOverScreen(gameModes gameInstance){
-
-//        textLabel.setFont(new Font("Bradley Hand ITC", Font.PLAIN, 50));
-//        textLabel.setHorizontalAlignment(JLabel.CENTER);
-//        textLabel.setText("Menu");
-//        textLabel.setOpaque(true);
-//
-//        textPanel.setLayout(new BorderLayout());
-//        textPanel.add(textLabel);
-//        textPanel.setBounds((boardWidth/2)-(boardWidth/10), 0, (boardWidth/5), boardHeight / 10);
-//        frame.add(textPanel);
-//        constantItems.add(textPanel);
-
         Collection<JComponent> gameOverParts= new ArrayList<>();
-        JPanel gameOverStats= new JPanel();
+
         JLabel gameOverMsg= new JLabel("Game Over");
-        gameOverParts.add(gameOverStats);
         gameOverParts.add(gameOverMsg);
 
-        gameOverMsg.setFont(new Font("Bradley Hand ITC", Font.PLAIN, 50));
-        gameOverMsg.setHorizontalAlignment(JLabel.CENTER);
-        gameOverMsg.setText("Game Over");
-        //gameOverStats.setBackground(Color.red);
-        gameOverMsg.setOpaque(true);
+        JLabel stats= new JLabel("Score: "+gameInstance.getScore());
+        gameOverParts.add(stats);
 
-        gameOverStats.setLayout(new BorderLayout());
-        gameOverStats.add(gameOverMsg);
-        gameOverStats.setBounds((boardWidth/2)-(boardWidth/10), (boardHeight/5), (boardWidth/5), boardHeight / 10);
-        frame.add(gameOverStats);
+
+
+        gameOverMsg.setFont(new Font("Bradley Hand ITC", Font.PLAIN, 50));
+        stats.setFont(new Font("Bradley Hand ITC", Font.PLAIN, 40));
+
+        gameOverMsg.setHorizontalAlignment(JLabel.CENTER);
+        stats.setHorizontalAlignment(JLabel.CENTER);
+
+        stats.setText("Score: "+gameInstance.getScore());
+        gameOverMsg.setText("Game Over");
+
+        gameOverMsg.setBounds((boardWidth/2)-(boardWidth/6), (boardHeight/5), (boardWidth/3), boardHeight / 10);
+        stats.setBounds( (boardWidth/2)-(boardWidth/10), (boardHeight/3), (boardWidth/5), boardHeight / 10);
+
+        frame.add(gameOverMsg);
+        frame.add(stats);
+
 
         JButton menu= new JButton("Menu");
         menu.setBounds((int) (boardWidth*3/10.0)-20, boardHeight/2, boardWidth/5,boardHeight/10);
@@ -390,17 +438,16 @@ public class gameMenu {
 
         JButton playAgain= new JButton("Play Again?");
         playAgain.setBounds(boardWidth/2+20, boardHeight/2, boardWidth/5,boardHeight/10);
+        gameOverParts.add(menu);
+        gameOverParts.add(playAgain);
         playAgain.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                nonConstantItems.forEach(x -> frame.remove(x));
-                if (gameInstance instanceof gameMode1) { gameType1(); }
-                else { gameType2(); }
+                gameOverParts.forEach(x -> frame.remove(x));
+                frame.repaint();
+                gameType1();
             }
         });
-
-        gameOverParts.add(menu);
-        gameOverParts.add(playAgain);
 
         nonConstantItems.addAll(gameOverParts);
         gameOverParts.forEach(x -> frame.add(x));
@@ -415,7 +462,10 @@ public class gameMenu {
         returnToMenu.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gameOver(gameInstance);
+                nonConstantItems.forEach(x -> frame.remove(x));
+
+                frame.repaint();
+                menuMode();
             }
         });
         frame.add(returnToMenu);
