@@ -445,7 +445,8 @@ public class gameMenu {
             public void actionPerformed(ActionEvent e) {
                 gameOverParts.forEach(x -> frame.remove(x));
                 frame.repaint();
-                gameType1();
+                if (gameInstance instanceof gameMode1) { gameType1(); }
+                else { gameType2(); }
             }
         });
 
