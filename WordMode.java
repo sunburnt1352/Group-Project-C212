@@ -16,10 +16,10 @@ public final class WordMode extends gameModes {
     WordMode() { this.SCORE = 0; this.MISTAKES = 0; }
 
     /**
-     * Pulls a random word from the dictionary, followed by a question mark
-     * @return list of file names composing the word and question mark
+     * Pulls a random word from the dictionary
+     * @return list of file names composing the word
      */
-    List<String> randomWord() {
+    void randomWord() {
         int n = (int) (Math.random() * 100);    // random line selection
         // Dictionary size must stay at 100
         List<String> res = new LinkedList<>();
@@ -32,13 +32,13 @@ public final class WordMode extends gameModes {
                 i++;
             }
             String extracted = br.readLine();
-            currWord = extracted;
+            this.currWord = extracted;
+            //System.out.println(extracted);
             for (int j = 0; j < extracted.length(); j++) {
                 res.add("asl-" + extracted.charAt(j) + ".png");
             }
 //            System.out.println(res);
-            res.add("question.png");
-            return res;
+            //return res;
         }
         catch (IOException ex) { throw new RuntimeException("Could not find dictionary.txt. Check your file structure!"); }
     }
@@ -69,7 +69,7 @@ public final class WordMode extends gameModes {
      */
     @Override
     public int getScore() {
-        return SCORE;
+        return this.SCORE;
     }
 
     /**
@@ -77,7 +77,7 @@ public final class WordMode extends gameModes {
      * @return the current word
      */
     public String getCurrWord() {
-        return currWord;
+        return this.currWord;
     }
 
     /**
@@ -116,6 +116,7 @@ public final class WordMode extends gameModes {
         for (int i = 0; i < word.length(); i++) {
             res.addLast("asl-"+word.charAt(i)+".png");
         }
+        res.add("question.png");
         return res;
     }
 }
