@@ -9,7 +9,7 @@ hand
 click
 home
 save
-guile
+guilt
 throw
 code
 puppy
@@ -59,7 +59,7 @@ video
 rave
 naval
 lily
-spade
+spell
 heart
 card
 suits
@@ -67,7 +67,7 @@ sedan
 mini
 know
 waste
-swig
+swag
 read
 books
 kebab
