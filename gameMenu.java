@@ -339,7 +339,13 @@ public class gameMenu {
             if(madeMistake){
                 frame.remove(mistakeDialouge);
             }
-            getAnswerForGM2(gameInstance, letter, mistakeDialouge);
+
+            if(gameInstance.getMistakes()==3){
+                frame.remove(letter);
+                gameOverScreen(gameInstance);
+            }
+            else
+                getAnswerForGM2(gameInstance, letter, mistakeDialouge);
         }
 
     }
@@ -395,10 +401,12 @@ public class gameMenu {
 
                     mistakeDialouge.setText("Wrong, word was: "+gameInstance.getCurrWord());
                     gameInstance.setMistakes( (gameInstance.getMistakes()+1) );
-                    
-                    
+
+
                     mistakeCounter.setText("Mistakes: " + gameInstance.getMistakes());
                     System.out.println(gameInstance.getMistakes());
+
+                    System.out.println(mistakeCounter.getText());
 
 
                     frame.invalidate();
@@ -423,9 +431,9 @@ public class gameMenu {
                     showWordGM2(gameInstance,letter,gameInstance.getLetterFiles(),0, false,mistakeDialouge);
                 }
 
-                if (gameInstance.getMistakes() >= 3) {
-                    gameOver(gameInstance);
-                }
+//                if (gameInstance.getMistakes() >= 3) {
+//                    gameOver(gameInstance);
+//                }
                 guessingTest.setText("");
 
             }
@@ -449,7 +457,11 @@ public class gameMenu {
         //System.out.println(nonConstantItems);
         nonConstantItems.forEach(x -> frame.remove(x));
 
+        frame.invalidate();
+        frame.validate();
         frame.repaint();
+
+
         if (gameInstance.getMistakes() > 0) {
             gameInstance.writeScore();
             gameOverScreen(gameInstance);
