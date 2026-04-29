@@ -7,13 +7,13 @@ import java.time.LocalTime;
 import java.util.LinkedList;
 import java.util.List;
 
-public final class gameMode2 extends gameModes {
+public final class WordMode extends gameModes {
 
     int SCORE;
     private String currWord;
     private int MISTAKES;
 
-    gameMode2() { this.SCORE = 0; this.MISTAKES = 0; }
+    WordMode() { this.SCORE = 0; this.MISTAKES = 0; }
 
     /**
      * Pulls a random word from the dictionary
