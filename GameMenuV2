@@ -256,6 +256,7 @@ public class GameMenuV2 {
                 (boardHeight / 2 - currLetter.getIconHeight()),
                 currLetter.getIconWidth(), currLetter.getIconHeight());
         letter.setIcon(currLetter);
+        letter.setVisible(true);
     }
 
     /**
@@ -285,9 +286,9 @@ public class GameMenuV2 {
         letter.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                List<String> tempWords= gameInstance.randomWord();
-                tempWords.add("question.png");
-                showWordGM2(gameInstance, letter, tempWords, 0);
+//                List<String> tempWords= gameInstance.randomWord();
+//                tempWords.add("question.png");
+                showWordGM2(gameInstance, letter, gameInstance.randomWord(), 0);
                 letter.setText(null);
             }
         });
@@ -313,6 +314,7 @@ public class GameMenuV2 {
             executorService.schedule(() -> {
                 ImageIcon currLetter=gameInstance.getLetter(word.get(index));
                 changeImage(currLetter,letter);
+                System.out.println(word.get(index));
                 showWordGM2(gameInstance, letter, word, index + 1);
 
             }, 1, TimeUnit.SECONDS);
@@ -375,8 +377,8 @@ public class GameMenuV2 {
                     gameOver(gameInstance);
                 }
                 guessingTest.setText("");
-                nonConstantItems.forEach(x -> frame.remove(x));
-                addReturnToMenu(gameInstance);
+//                nonConstantItems.forEach(x -> frame.remove(x));
+//                addReturnToMenu(gameInstance);
                 //TODO: Get it to run again
                 showWordGM2(gameInstance,new JButton(),gameInstance.randomWord(),0);
             }
