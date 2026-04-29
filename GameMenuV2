@@ -154,7 +154,7 @@ public class GameMenuV2 {
         explainMistake.setHorizontalAlignment(JLabel.CENTER);
         explainMistake.setOpaque(true);
         explainMistake.setBounds(boardWidth / 4,
-                (boardHeight / 2 - 300),
+                boardHeight / 2,
                 boardWidth / 2, boardHeight / 8);
         nonConstantItems.add(explainMistake);
         frame.add(explainMistake);
@@ -163,7 +163,7 @@ public class GameMenuV2 {
         ImageIcon currLetter = gameInstance.getRandomLetter();
         JButton letter = new JButton("Begin");
         letter.setBackground(Color.PINK);
-        letter.setBounds(boardWidth / 2 - 50, boardHeight / 2 - 50, 100, 100);
+        letter.setBounds(boardWidth / 2 - 50, boardHeight / 2 - 100, 100, 100);
 
         nonConstantItems.add(letter);
 
