@@ -16,8 +16,8 @@ public final class WordMode extends gameModes {
     WordMode() { this.SCORE = 0; this.MISTAKES = 0; }
 
     /**
-     * Pulls a random word from the dictionary
-     * @return list of file names composing the word
+     * Pulls a random word from the dictionary, followed by a question mark
+     * @return list of file names composing the word and question mark
      */
     List<String> randomWord() {
         int n = (int) (Math.random() * 100);    // random line selection
@@ -37,6 +37,7 @@ public final class WordMode extends gameModes {
                 res.add("asl-" + extracted.charAt(j) + ".png");
             }
 //            System.out.println(res);
+            res.add("question.png");
             return res;
         }
         catch (IOException ex) { throw new RuntimeException("Could not find dictionary.txt. Check your file structure!"); }
