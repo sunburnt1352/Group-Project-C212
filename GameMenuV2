@@ -488,7 +488,7 @@ public class GameMenuV2 {
             @Override
             public void actionPerformed(ActionEvent e) {
                 nonConstantItems.forEach(x -> frame.remove(x));
-
+                gameInstance.writeScore();
                 frame.repaint();
                 menuMode();
             }
