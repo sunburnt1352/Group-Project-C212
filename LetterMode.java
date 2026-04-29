@@ -10,13 +10,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Stream;
 
-public final class gameMode1 extends gameModes {
+public final class LetterMode extends gameModes {
 
     int SCORE;
     private char currLetter;
     private int MISTAKES;
 
-    gameMode1() {
+    LetterMode() {
         this.SCORE = 0;
         this.MISTAKES = 0;
     }
@@ -61,11 +61,8 @@ public final class gameMode1 extends gameModes {
     ImageIcon getRandomLetter(){
 
         URL imagePath = getClass().getResource(randomLetter());
-//        System.out.println(imagePath);
         if (imagePath == null) { throw new RuntimeException("Could not find a resource"); }
-        //BufferedImage myPicture = ImageIO.read(imagePath);
         return new ImageIcon(imagePath);
-
     }
 
     /**
