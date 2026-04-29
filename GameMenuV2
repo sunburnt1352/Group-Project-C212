@@ -2,18 +2,14 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.awt.event.KeyEvent;
-import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicReference;
 
-public class gameMenu {
+public class GameMenuV2 {
     int boardWidth = 800;
     int boardHeight = 700; //50 for the text panel on top
 
@@ -27,7 +23,7 @@ public class gameMenu {
     /**
      * Constructor for the starting menu; creates the frame
      */
-    gameMenu() {
+    GameMenuV2() {
         frame.setSize(boardWidth, boardHeight);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
@@ -252,7 +248,11 @@ public class gameMenu {
         frame.setFocusable(true);
     }
 
-
+    /**
+     * Sets a given JButton to a given icon
+     * @param currLetter the icon to be changed to
+     * @param letter the JButton to display currLetter
+     */
     void changeImage(ImageIcon currLetter, JButton letter) {
         letter.setBounds(boardWidth / 2 - (int) (0.5 * currLetter.getIconWidth()),
                 (boardHeight / 2 - currLetter.getIconHeight()),
@@ -292,11 +292,10 @@ public class gameMenu {
             public void actionPerformed(ActionEvent e) {
                 List<String> tempWords= gameInstance.randomWord();
                 tempWords.add("question.png");
+                letter.setText("");
                 showWordGM2(gameInstance, letter, tempWords, 0);
-                
             }
         });
-
 
 
         frame.add(letter);
@@ -307,6 +306,13 @@ public class gameMenu {
     }
 
 
+    /**
+     * Recursively cycles through each letter of a word
+     * @param gameInstance the game being run
+     * @param letter the JButton being updated
+     * @param word the word being signed
+     * @param index the index of the current letter
+     */
     void showWordGM2(gameMode2 gameInstance, JButton letter, List<String> word, int index){
         if(index<word.size()){
             ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
@@ -322,6 +328,11 @@ public class gameMenu {
         }
     }
 
+    /**
+     * Creates a mistake counter, a guess box, and a text field,
+     *    and runs the guess box functionality
+     * @param gameInstance the game being run
+     */
     void getAnswerForGM2(gameMode2 gameInstance){
         JLabel mistakeCounter = new JLabel("Mistakes");
         mistakeCounter.setText("Mistakes: " + gameInstance.getMistakes());
@@ -332,47 +343,42 @@ public class gameMenu {
         nonConstantItems.add(mistakeCounter);
 
         frame.add(mistakeCounter);
-       // gameInstance.setAnswerSoFar("");
+        // gameInstance.setAnswerSoFar("");
 
         JButton guess = new JButton("Guess");
         guess.setText("Guess");
         guess.setFont(new Font("Bradley Hand ITC", Font.PLAIN, 25));
         guess.setHorizontalAlignment(JLabel.CENTER);
         guess.setOpaque(true);
-        guess.setBackground(new Color(81, 138, 97));
+        guess.setBackground(new Color(152, 251, 152));
         guess.setBounds((boardWidth/2)-(boardWidth/6),(boardHeight-(boardHeight/2)) ,(boardWidth / 3), boardHeight / 10);
         nonConstantItems.add(guess);
         frame.add(guess);
 
         JTextField guessingTest= new JTextField();
         guessingTest.setOpaque(true);
+        guessingTest.setHorizontalAlignment(JTextField.CENTER);
+        guessingTest.setFont(new Font("Arial", Font.PLAIN, 16));
         guessingTest.setBackground(new Color(189, 238, 255));
         guessingTest.setBounds((boardWidth/2)-(boardWidth/6), (boardHeight-(int)(boardHeight/2.5)) ,(boardWidth / 3), boardHeight / 10);
         nonConstantItems.add(guessingTest);
         frame.add(guessingTest);
 
-
         guess.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String temp= guessingTest.getText();
-                System.out.println(temp);
+//                System.out.println(temp);
                 if(!temp.equals(gameInstance.getCurrWord())){
-                    
+
                     gameInstance.setMistakes(gameInstance.getMistakes()+1);
                     mistakeCounter.setText("Mistakes: " + gameInstance.getMistakes());
-                    
-                    
-                    guessingTest.setText("");
 
+                    guessingTest.setText("");
 
                 }
             }
         });
-
-
-
-
 
         //magic, gets the screen to update during runtime
         frame.invalidate();
@@ -390,7 +396,6 @@ public class gameMenu {
 
     /**
      * Mechanics for ending any game mode
-     *
      * @param gameInstance a game
      */
     void gameOver(gameModes gameInstance) {
@@ -409,7 +414,6 @@ public class gameMenu {
 
     /**
      * Graphics for the game over screen
-     *
      * @param gameInstance a game that is ending
      */
     void gameOverScreen(gameModes gameInstance) {
@@ -462,7 +466,6 @@ public class gameMenu {
                 } else {
                     gameType2();
                 }
-                // TODO: Why does play again button break gameType2?
             }
         });
 
@@ -475,8 +478,6 @@ public class gameMenu {
         frame.repaint();
 
     }
-
-
 
 
     /**
