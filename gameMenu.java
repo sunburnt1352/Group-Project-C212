@@ -102,7 +102,7 @@ public class gameMenu {
 
 
     /**
-     * Builds the header and menu button for gameType1; calls runGame1()
+     * Builds the header and menu button for Letter Mode; calls runGame1()
      */
     void gameType1() {
         textLabel.setFont(new Font("Bradley Hand ITC", Font.PLAIN, 25));
@@ -116,7 +116,7 @@ public class gameMenu {
         frame.add(textPanel);
 
 
-        gameMode1 gameInstance = new gameMode1();
+        LetterMode gameInstance = new LetterMode();
 
 
         addReturnToMenu(gameInstance);
@@ -130,11 +130,11 @@ public class gameMenu {
     }
 
     /**
-     * Begin button and mechanics for gameMode1
+     * Begin button and mechanics for Letter Mode
      *
      * @param gameInstance a game
      */
-    void runGame1(gameMode1 gameInstance) {
+    void runGame1(LetterMode gameInstance) {
 
         //System.out.println("ran top");
         JLabel mistakeCounter = new JLabel("Mistakes");
@@ -271,7 +271,7 @@ public class gameMenu {
         //textPanel.setBounds(0, 0, boardWidth, boardHeight / 10);
         frame.add(textPanel);
 
-        gameMode2 gameInstance = new gameMode2();
+        WordMode gameInstance = new WordMode();
 
         addReturnToMenu(gameInstance);
 
@@ -330,10 +330,9 @@ public class gameMenu {
      * Flashes a new word on the screen
      *
      * @param gameInstance a game
-     *                     //     * @param letter icon being changed
      * @return list of lowercase characters in the word
      */
-    java.util.List<Character> newWord(gameMode2 gameInstance) {
+    java.util.List<Character> newWord(WordMode gameInstance) {
         JButton letter = new JButton();
         java.util.List<String> word = gameInstance.randomWord();
         java.util.List<Character> letters = new ArrayList<>();
@@ -470,7 +469,7 @@ public class gameMenu {
             public void actionPerformed(ActionEvent e) {
                 gameOverParts.forEach(x -> frame.remove(x));
                 frame.repaint();
-                if (gameInstance instanceof gameMode1) {
+                if (gameInstance instanceof LetterMode) {
                     gameType1();
                 } else {
                     gameType2();
