@@ -347,7 +347,6 @@ public class gameMenu {
             else
                 getAnswerForGM2(gameInstance, letter, mistakeDialouge);
         }
-
     }
 
     /**
@@ -385,14 +384,12 @@ public class gameMenu {
         nonConstantItems.add(guessingTest);
         frame.add(guessingTest);
 
-
-
         guess.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String temp = guessingTest.getText();
 //                System.out.println(temp);
-                if(!temp.equals(gameInstance.getCurrWord())){
+                if(!temp.toLowerCase().equals(gameInstance.getCurrWord())){
 
                     System.out.println("word: "+gameInstance.getCurrWord());
                     frame.add(mistakeDialouge);
@@ -401,7 +398,6 @@ public class gameMenu {
 
                     mistakeDialouge.setText("Wrong, word was: "+gameInstance.getCurrWord());
                     gameInstance.setMistakes( (gameInstance.getMistakes()+1) );
-
 
                     mistakeCounter.setText("Mistakes: " + gameInstance.getMistakes());
                     System.out.println(gameInstance.getMistakes());
