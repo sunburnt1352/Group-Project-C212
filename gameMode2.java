@@ -104,4 +104,17 @@ public class gameMode2 extends gameModes {
     ImageIcon getLetter(String url) {
         return new ImageIcon(getClass().getResource(url));
     }
+
+    /**
+     * Takes the current word and gets a list of file names for its letters
+     * @return list of file names
+     */
+    List<String> getLetterFiles() {
+        String word = this.getCurrWord();
+        List<String> res = new LinkedList<>();
+        for (int i = 0; i < word.length(); i++) {
+            res.addLast("asl-"+word.charAt(i)+".png");
+        }
+        return res;
+    }
 }
