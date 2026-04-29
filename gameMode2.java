@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -35,6 +36,7 @@ public class gameMode2 extends gameModes {
             for (int j = 0; j < extracted.length(); j++) {
                 res.add("asl-" + extracted.charAt(j) + ".png");
             }
+//            System.out.println(res);
             return res;
         }
         catch (IOException ex) { throw new RuntimeException("Could not find dictionary.txt. Check your file structure!"); }
@@ -92,5 +94,14 @@ public class gameMode2 extends gameModes {
     @Override
     public void setMistakes(int n) {
         this.MISTAKES = n;
+    }
+
+    /**
+     * Gets an ImageIcon from a given String
+     * @param url file name
+     * @return corresponding ImageIcon
+     */
+    ImageIcon getLetter(String url) {
+        return new ImageIcon(getClass().getResource(url));
     }
 }
