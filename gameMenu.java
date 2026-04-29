@@ -2,16 +2,12 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.awt.event.KeyEvent;
-import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class gameMenu {
     int boardWidth = 800;
@@ -158,7 +154,7 @@ public class gameMenu {
         explainMistake.setHorizontalAlignment(JLabel.CENTER);
         explainMistake.setOpaque(true);
         explainMistake.setBounds(boardWidth / 4,
-                (boardHeight / 2 - 300),
+                (boardHeight / 2),
                 boardWidth / 2, boardHeight / 8);
         nonConstantItems.add(explainMistake);
         frame.add(explainMistake);
@@ -167,7 +163,7 @@ public class gameMenu {
         ImageIcon currLetter = gameInstance.getRandomLetter();
         JButton letter = new JButton("Begin");
         letter.setBackground(Color.PINK);
-        letter.setBounds(boardWidth / 2 - 50, boardHeight / 2 - 50, 100, 100);
+        letter.setBounds(boardWidth / 2 - 50, boardHeight / 2 - 100, 100, 100);
 
         nonConstantItems.add(letter);
 
