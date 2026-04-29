@@ -7,7 +7,7 @@ import java.time.LocalTime;
 import java.util.LinkedList;
 import java.util.List;
 
-public class gameMode2 extends gameModes {
+public final class gameMode2 extends gameModes {
 
     int SCORE;
     private String currWord;
