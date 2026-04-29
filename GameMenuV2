@@ -102,7 +102,7 @@ public class GameMenuV2 {
 
 
     /**
-     * Builds the header and menu button for gameType1; calls runGame1()
+     * Builds the header and menu button for Letter Mode; calls runGame1()
      */
     void gameType1() {
         textLabel.setFont(new Font("Bradley Hand ITC", Font.PLAIN, 25));
@@ -116,7 +116,7 @@ public class GameMenuV2 {
         frame.add(textPanel);
 
 
-        gameMode1 gameInstance = new gameMode1();
+        LetterMode gameInstance = new LetterMode();
 
 
         addReturnToMenu(gameInstance);
@@ -134,7 +134,7 @@ public class GameMenuV2 {
      *
      * @param gameInstance a game
      */
-    void runGame1(gameMode1 gameInstance) {
+    void runGame1(LetterMode gameInstance) {
 
         //System.out.println("ran top");
         JLabel mistakeCounter = new JLabel("Mistakes");
@@ -272,13 +272,13 @@ public class GameMenuV2 {
         textPanel.add(textLabel);
         frame.add(textPanel);
 
-        gameMode2 gameInstance = new gameMode2();
+        WordMode gameInstance = new WordMode();
 
         addReturnToMenu(gameInstance);
 
         JButton letter = new JButton("Begin");
         letter.setBackground(Color.PINK);
-        letter.setBounds(boardWidth / 2 - 50, boardHeight / 2 - 50, 100, 100);
+        letter.setBounds(boardWidth / 2 - 50, boardHeight / 2 - 100, 100, 100);
 
         nonConstantItems.add(letter);
 
@@ -307,7 +307,7 @@ public class GameMenuV2 {
      * @param word the word being signed
      * @param index the index of the current letter
      */
-    void showWordGM2(gameMode2 gameInstance, JButton letter, List<String> word, int index){
+    void showWordGM2(WordMode gameInstance, JButton letter, List<String> word, int index){
         if(index < word.size()){
             ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
             executorService.schedule(() -> {
@@ -328,7 +328,7 @@ public class GameMenuV2 {
      *    and runs the guess box functionality
      * @param gameInstance the game being run
      */
-    void getAnswerForGM2(gameMode2 gameInstance){
+    void getAnswerForGM2(WordMode gameInstance){
         JLabel mistakeCounter = new JLabel("Mistakes");
         mistakeCounter.setText("Mistakes: " + gameInstance.getMistakes());
         mistakeCounter.setFont(new Font("Bradley Hand ITC", Font.PLAIN, 25));
@@ -361,7 +361,7 @@ public class GameMenuV2 {
         guess.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String temp= guessingTest.getText();
+                String temp = guessingTest.getText();
 //                System.out.println(temp);
                 if(!temp.equals(gameInstance.getCurrWord())){
                     gameInstance.setMistakes(gameInstance.getMistakes()+1);
@@ -459,7 +459,7 @@ public class GameMenuV2 {
             public void actionPerformed(ActionEvent e) {
                 gameOverParts.forEach(x -> frame.remove(x));
                 frame.repaint();
-                if (gameInstance instanceof gameMode1) {
+                if (gameInstance instanceof LetterMode) {
                     gameType1();
                 } else {
                     gameType2();
