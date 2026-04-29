@@ -172,7 +172,6 @@ public class GameMenuV2 {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-
                 if (letter.hasFocus()) {
 //                    letter.setBackground(null);
                     //System.out.println("has focus");
@@ -181,7 +180,6 @@ public class GameMenuV2 {
                             currLetter.getIconWidth(), currLetter.getIconHeight());
                     letter.setIcon(currLetter);
                     letter.setText(null);
-
 
                     letter.addKeyListener(new KeyListener() {
 
@@ -258,12 +256,12 @@ public class GameMenuV2 {
                 (boardHeight / 2 - currLetter.getIconHeight()),
                 currLetter.getIconWidth(), currLetter.getIconHeight());
         letter.setIcon(currLetter);
-
     }
 
-
+    /**
+     * Starts game mode 2
+     */
     void gameType2() {
-
 
         textLabel.setFont(new Font("Bradley Hand ITC", Font.PLAIN, 25));
         textLabel.setHorizontalAlignment(JLabel.CENTER);
@@ -276,9 +274,7 @@ public class GameMenuV2 {
 
         gameMode2 gameInstance = new gameMode2();
 
-
         addReturnToMenu(gameInstance);
-
 
         JButton letter = new JButton("Begin");
         letter.setBackground(Color.PINK);
@@ -286,17 +282,15 @@ public class GameMenuV2 {
 
         nonConstantItems.add(letter);
 
-
         letter.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 List<String> tempWords= gameInstance.randomWord();
                 tempWords.add("question.png");
-                letter.setText("");
                 showWordGM2(gameInstance, letter, tempWords, 0);
+                letter.setText(null);
             }
         });
-
 
         frame.add(letter);
         frame.setFocusable(true);
@@ -314,16 +308,17 @@ public class GameMenuV2 {
      * @param index the index of the current letter
      */
     void showWordGM2(gameMode2 gameInstance, JButton letter, List<String> word, int index){
-        if(index<word.size()){
+        if(index < word.size()){
             ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
             executorService.schedule(() -> {
                 ImageIcon currLetter=gameInstance.getLetter(word.get(index));
                 changeImage(currLetter,letter);
-                showWordGM2(gameInstance, letter, word, (index+1) );
+                showWordGM2(gameInstance, letter, word, index + 1);
 
             }, 1, TimeUnit.SECONDS);
         }
-        if(index==word.size()){
+
+        if(index == word.size()){
             getAnswerForGM2(gameInstance);
         }
     }
@@ -346,7 +341,6 @@ public class GameMenuV2 {
         // gameInstance.setAnswerSoFar("");
 
         JButton guess = new JButton("Guess");
-        guess.setText("Guess");
         guess.setFont(new Font("Bradley Hand ITC", Font.PLAIN, 25));
         guess.setHorizontalAlignment(JLabel.CENTER);
         guess.setOpaque(true);
@@ -355,7 +349,7 @@ public class GameMenuV2 {
         nonConstantItems.add(guess);
         frame.add(guess);
 
-        JTextField guessingTest= new JTextField();
+        JTextField guessingTest = new JTextField();
         guessingTest.setOpaque(true);
         guessingTest.setHorizontalAlignment(JTextField.CENTER);
         guessingTest.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -370,13 +364,21 @@ public class GameMenuV2 {
                 String temp= guessingTest.getText();
 //                System.out.println(temp);
                 if(!temp.equals(gameInstance.getCurrWord())){
-
                     gameInstance.setMistakes(gameInstance.getMistakes()+1);
                     mistakeCounter.setText("Mistakes: " + gameInstance.getMistakes());
-
-                    guessingTest.setText("");
-
+                    showWordGM2(gameInstance,new JButton(),gameInstance.getLetterFiles(),0);
                 }
+                else {
+                    gameInstance.SCORE += temp.length()*10;
+                }
+                if (gameInstance.getMistakes() >= 3) {
+                    gameOver(gameInstance);
+                }
+                guessingTest.setText("");
+                nonConstantItems.forEach(x -> frame.remove(x));
+                addReturnToMenu(gameInstance);
+                //TODO: Get it to run again
+                showWordGM2(gameInstance,new JButton(),gameInstance.randomWord(),0);
             }
         });
 
@@ -386,12 +388,8 @@ public class GameMenuV2 {
         frame.repaint();
     }
 
-    void gameMode2MistakeHappened(gameMode2 gameInstance){
 
-
-
-    }
-
+//    void gameMode2MistakeHappened(gameMode2 gameInstance){    }
 
 
     /**
