@@ -7,7 +7,7 @@ import java.time.LocalTime;
 import java.util.LinkedList;
 import java.util.List;
 
-public final class WordMode extends GameModes {
+public final class WordMode implements IGameInstance {
 
     int SCORE;
     private String currWord;
