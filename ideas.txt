@@ -1,0 +1,9 @@
+- Show score while playing
+- Help button -> popup (specific to the game mode being played)
+- Fix score-writing that occasionally duplicates
+- Set fingerspelling icons against a static-sized background box?
+- Simple design for the frame background?
+- Round-corner buttons
+- Some sort of reaction when you get it right
+- Sound effects
+- When you get a word wrong and it repeats, you should not get points for the second attempt? Or at least discounted?
