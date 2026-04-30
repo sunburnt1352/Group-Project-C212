@@ -31,7 +31,7 @@ public final class LetterMode implements IGameInstance {
                 'a','b','c','d','e','f','g','h','i','j','k','l','m',
                 'n','o','p','q','r','s','t','u','v','w','x','y','z').toList();
         this.currLetter=(alphabet.get(n));
-        return "asl-" + alphabet.get(n) + ".png";
+        return "resources/asl-" + alphabet.get(n) + ".png";
     }
 
     /**
@@ -73,6 +73,10 @@ public final class LetterMode implements IGameInstance {
         return this.SCORE;
     }
 
+    /**
+     * Sets the score
+     * @param score score to be set
+     */
     @Override
     public void setScore(int score) {
         this.SCORE = score;
