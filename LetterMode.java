@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 
 public final class LetterMode implements IGameInstance {
 
-    int SCORE;
+    private int SCORE;
     private char currLetter;
     private int MISTAKES;
 
@@ -70,7 +70,12 @@ public final class LetterMode implements IGameInstance {
      */
     @Override
     public int getScore() {
-        return SCORE;
+        return this.SCORE;
+    }
+
+    @Override
+    public void setScore(int score) {
+        this.SCORE = score;
     }
 
     /**
@@ -78,7 +83,7 @@ public final class LetterMode implements IGameInstance {
      * @return the current character
      */
     public char getCurrLetter() {
-        return currLetter;
+        return this.currLetter;
     }
 
     /**
