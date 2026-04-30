@@ -319,7 +319,7 @@ public class GameMenu {
 
             if(gameInstance.getMistakes()==3){
                 frame.remove(letter);
-                gameOverScreen(gameInstance);
+                gameOver(gameInstance);
             }
             else
                 getAnswerForGM2(gameInstance, letter, mistakeDialogue);
