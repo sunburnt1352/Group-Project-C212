@@ -8,3 +8,5 @@
 - Sound effects
 - When you get a word wrong and it repeats, you should not get points for the second attempt? Or at least discounted?
 - README for Github users
+- Fix the guess boxes still appearing if you hit Return to Menu while word is showing
+- Guess by hitting enter instead of/in addition to a button
