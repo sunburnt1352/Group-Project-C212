@@ -7,7 +7,7 @@ import java.time.LocalTime;
 import java.util.LinkedList;
 import java.util.List;
 
-public final class WordMode extends gameModes {
+public final class WordMode extends GameModes {
 
     int SCORE;
     private String currWord;
@@ -23,9 +23,7 @@ public final class WordMode extends gameModes {
         int n = (int) (Math.random() * 100);    // random line selection
         // Dictionary size must stay at 100
         List<String> res = new LinkedList<>();
-//        System.out.println(n);
-        try (BufferedReader br = new BufferedReader(new FileReader(
-                "dictionary.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("dictionary.txt"))) {
             int i = 0;
             while (i < n) {
                 br.readLine();
@@ -33,12 +31,9 @@ public final class WordMode extends gameModes {
             }
             String extracted = br.readLine();
             this.currWord = extracted;
-            //System.out.println(extracted);
             for (int j = 0; j < extracted.length(); j++) {
                 res.add("asl-" + extracted.charAt(j) + ".png");
             }
-//            System.out.println(res);
-            //return res;
         }
         catch (IOException ex) { throw new RuntimeException("Could not find dictionary.txt. Check your file structure!"); }
     }
@@ -103,7 +98,12 @@ public final class WordMode extends gameModes {
      * @return corresponding ImageIcon
      */
     ImageIcon getLetter(String url) {
-        return new ImageIcon(getClass().getResource(url));
+        if (getClass().getResource(url) == null) {
+            throw new RuntimeException("Could not find "+url+". Check your file structure!");
+        }
+        else {
+            return new ImageIcon(getClass().getResource(url));
+        }
     }
 
     /**
