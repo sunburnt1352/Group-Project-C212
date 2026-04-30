@@ -10,3 +10,5 @@
 - README for Github users
 - Fix the guess boxes still appearing if you hit Return to Menu while word is showing
 - Guess by hitting enter instead of/in addition to a button
+- Expand dictionary
+- Usernames?
