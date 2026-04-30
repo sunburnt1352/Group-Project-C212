@@ -9,7 +9,7 @@ import java.util.List;
 
 public final class WordMode implements IGameInstance {
 
-    int SCORE;
+    private int SCORE;
     private String currWord;
     private int MISTAKES;
 
@@ -65,6 +65,15 @@ public final class WordMode implements IGameInstance {
     @Override
     public int getScore() {
         return this.SCORE;
+    }
+
+    /**
+     * Setter for the score
+     * @param score score to be set
+     */
+    @Override
+    public void setScore(int score) {
+        this.SCORE = score;
     }
 
     /**
