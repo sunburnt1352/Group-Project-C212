@@ -12,3 +12,4 @@
 - Guess by hitting enter instead of/in addition to a button
 - Expand dictionary
 - Usernames?
+- Organize files (folder for dictionary and images) - leave only Main outside to make it more user-intuitive
