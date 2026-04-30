@@ -183,7 +183,7 @@ public class GameMenu {
 
                             //if it is the correct letter
                             if (Character.toLowerCase(e.getKeyChar()) == gameInstance.getCurrLetter()) {
-                                gameInstance.SCORE += 10;
+                                gameInstance.setScore(gameInstance.getScore() + 10);
                                 ImageIcon currLetter = gameInstance.getRandomLetter();
                                 changeImage(currLetter, letter);
                             }
@@ -317,7 +317,7 @@ public class GameMenu {
                 frame.remove(mistakeDialogue);
             }
 
-            if(gameInstance.getMistakes()==3){
+            if(gameInstance.getMistakes() == 3){
                 frame.remove(letter);
                 gameOver(gameInstance);
             }
@@ -369,7 +369,6 @@ public class GameMenu {
                 String temp = guessingTest.getText();
                 if(!temp.toLowerCase().equals(gameInstance.getCurrWord())){
 
-                    System.out.println("word: "+gameInstance.getCurrWord());
                     frame.add(mistakeDialogue);
                     frame.remove(guess);
                     frame.remove(guessingTest);
@@ -388,7 +387,7 @@ public class GameMenu {
                     showWordGM2(gameInstance,letter ,gameInstance.getLetterFiles(),0, true,mistakeDialogue);
                 }
                 else {
-                    gameInstance.SCORE += temp.length()*10;
+                    gameInstance.setScore(gameInstance.getScore() + temp.length()*10);
                     gameInstance.randomWord();
 
                     frame.remove(guess);
