@@ -7,3 +7,4 @@
 - Some sort of reaction when you get it right
 - Sound effects
 - When you get a word wrong and it repeats, you should not get points for the second attempt? Or at least discounted?
+- README for Github users
