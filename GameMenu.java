@@ -9,7 +9,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class gameMenu {
+public class GameMenu {
     int boardWidth = 800;
     int boardHeight = 700; //50 for the text panel on top
 
@@ -23,7 +23,7 @@ public class gameMenu {
     /**
      * Constructor for the starting menu; creates the frame
      */
-    gameMenu() {
+    GameMenu() {
         frame.setSize(boardWidth, boardHeight);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
@@ -417,7 +417,7 @@ public class gameMenu {
      * Mechanics for ending any game mode
      * @param gameInstance a game
      */
-    void gameOver(gameModes gameInstance) {
+    void gameOver(GameModes gameInstance) {
         nonConstantItems.forEach(x -> frame.remove(x));
 
         frame.invalidate();
@@ -436,7 +436,7 @@ public class gameMenu {
      * Graphics for the game over screen
      * @param gameInstance a game that is ending
      */
-    void gameOverScreen(gameModes gameInstance) {
+    void gameOverScreen(GameModes gameInstance) {
         Collection<JComponent> gameOverParts = new ArrayList<>();
 
         JLabel gameOverMsg = new JLabel("Game Over");
@@ -501,7 +501,7 @@ public class gameMenu {
      * Adds the return to menu button
      * @param gameInstance a game which the button will act upon
      */
-    void addReturnToMenu(gameModes gameInstance) {
+    void addReturnToMenu(GameModes gameInstance) {
         returnToMenu.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
