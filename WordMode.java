@@ -23,7 +23,7 @@ public final class WordMode implements IGameInstance {
         int n = (int) (Math.random() * 100);    // random line selection
         // Dictionary size must stay at 100
         List<String> res = new LinkedList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader("dictionary.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("src/resources/dictionary.txt"))) {
             int i = 0;
             while (i < n) {
                 br.readLine();
@@ -32,7 +32,7 @@ public final class WordMode implements IGameInstance {
             String extracted = br.readLine();
             this.currWord = extracted;
             for (int j = 0; j < extracted.length(); j++) {
-                res.add("asl-" + extracted.charAt(j) + ".png");
+                res.add("resources/asl-" + extracted.charAt(j) + ".png");
             }
         }
         catch (IOException ex) { throw new RuntimeException("Could not find dictionary.txt. Check your file structure!"); }
@@ -123,9 +123,9 @@ public final class WordMode implements IGameInstance {
         String word = this.getCurrWord();
         List<String> res = new LinkedList<>();
         for (int i = 0; i < word.length(); i++) {
-            res.addLast("asl-"+word.charAt(i)+".png");
+            res.addLast("resources/asl-"+word.charAt(i)+".png");
         }
-        res.add("question.png");
+        res.add("resources/question.png");
         return res;
     }
 }
