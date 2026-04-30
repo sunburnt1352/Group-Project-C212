@@ -437,6 +437,7 @@ public class GameMenu {
      * @param gameInstance a game that is ending
      */
     void gameOverScreen(IGameInstance gameInstance) {
+        frame.remove(returnToMenu);
         Collection<JComponent> gameOverParts = new ArrayList<>();
 
         JLabel gameOverMsg = new JLabel("Game Over");

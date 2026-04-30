@@ -1,5 +1,5 @@
 public class Main {
-    void main() throws Exception {
+    public static void main(String[] args) throws Exception {
         GameMenu menu = new GameMenu();
     }
 }
