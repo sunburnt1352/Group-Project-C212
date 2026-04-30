@@ -355,15 +355,22 @@ public class gameMenu {
      * @param gameInstance the game being run
      */
     void getAnswerForGM2(WordMode gameInstance, JButton letter, JLabel mistakeDialouge){
+
         JLabel mistakeCounter = new JLabel("Mistakes");
         mistakeCounter.setText("Mistakes: " + gameInstance.getMistakes());
+//        System.out.println(mistakeCounter.getText());
+
         mistakeCounter.setFont(new Font("Bradley Hand ITC", Font.PLAIN, 25));
         mistakeCounter.setHorizontalAlignment(JLabel.CENTER);
         mistakeCounter.setOpaque(true);
         mistakeCounter.setBounds((boardWidth - (boardWidth / 3)), 0, (boardWidth / 3), boardHeight / 10);
+
+//        mistakeCounter.paintImmediately(mistakeCounter.getVisibleRect());
+
         nonConstantItems.add(mistakeCounter);
 
         frame.add(mistakeCounter);
+
         // gameInstance.setAnswerSoFar("");
 
         JButton guess = new JButton("Guess");
@@ -401,9 +408,9 @@ public class gameMenu {
 
                     mistakeCounter.setText("Mistakes: " + gameInstance.getMistakes());
                     System.out.println(gameInstance.getMistakes());
-
+//
                     System.out.println(mistakeCounter.getText());
-
+                    mistakeCounter.paintImmediately(mistakeCounter.getVisibleRect());
 
                     frame.invalidate();
                     frame.validate();
@@ -430,6 +437,7 @@ public class gameMenu {
 //                if (gameInstance.getMistakes() >= 3) {
 //                    gameOver(gameInstance);
 //                }
+                frame.remove(mistakeCounter);
                 guessingTest.setText("");
 
             }
@@ -441,9 +449,7 @@ public class gameMenu {
         frame.repaint();
     }
 
-
 //    void gameMode2MistakeHappened(gameMode2 gameInstance){    }
-
 
     /**
      * Mechanics for ending any game mode
