@@ -59,7 +59,6 @@ public final class LetterMode extends gameModes {
      * @return ImageIcon
      */
     ImageIcon getRandomLetter(){
-
         URL imagePath = getClass().getResource(randomLetter());
         if (imagePath == null) { throw new RuntimeException("Could not find a resource"); }
         return new ImageIcon(imagePath);
