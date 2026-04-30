@@ -417,7 +417,7 @@ public class GameMenu {
      * Mechanics for ending any game mode
      * @param gameInstance a game
      */
-    void gameOver(GameModes gameInstance) {
+    void gameOver(IGameInstance gameInstance) {
         nonConstantItems.forEach(x -> frame.remove(x));
 
         frame.invalidate();
@@ -436,7 +436,7 @@ public class GameMenu {
      * Graphics for the game over screen
      * @param gameInstance a game that is ending
      */
-    void gameOverScreen(GameModes gameInstance) {
+    void gameOverScreen(IGameInstance gameInstance) {
         Collection<JComponent> gameOverParts = new ArrayList<>();
 
         JLabel gameOverMsg = new JLabel("Game Over");
@@ -501,7 +501,7 @@ public class GameMenu {
      * Adds the return to menu button
      * @param gameInstance a game which the button will act upon
      */
-    void addReturnToMenu(GameModes gameInstance) {
+    void addReturnToMenu(IGameInstance gameInstance) {
         returnToMenu.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
